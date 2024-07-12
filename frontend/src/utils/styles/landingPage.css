@@ -1,0 +1,172 @@
+body {
+    font-family: "Poppins", sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.header-container {
+    margin: 0 10vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+header h1 {
+    font-size: 2.5vw;
+    color: #0073b1;
+}
+
+header nav a {
+    margin-left: 2vw;
+    font-size: 1.2vw;
+    color: #0073b1;
+    text-decoration: none;
+}
+
+.hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 10vh 10vw;
+    background-color: #ffffff;
+}
+
+.hero-content {
+    max-width: 50vw;
+}
+
+.hero h2 {
+    font-size: 3vw;
+    margin: 5vh 0;
+}
+
+.auth-header {
+    display: flex;
+    flex-direction: column;
+    gap: 1vh;
+}
+
+.search-bar input {
+    width: 100%;
+    padding: 1.2vh;
+    font-size: 1.5vw;
+    margin-bottom: 1vh;
+}
+
+.search-bar button {
+    padding: 1.2vh;
+    font-size: 1.5vw;
+    background-color: #0073b1;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.hero-image img {
+    width: auto;
+    height: auto;
+   
+}
+
+.content-topics {
+    height: 70vh;
+    background-color: #f3f2ef;
+    padding: 5vh 5vw;
+    text-align: center;
+}
+
+.content-topics h3 {
+    font-size: 2vw;
+    margin-bottom: 3vh;
+}
+
+.topics {
+    display: flex;
+    justify-content: center;
+    gap: 2vw;
+}
+
+.topics a {
+    background-color: #0073b1;
+    color: white;
+    padding: 1.5vh 3vw;
+    text-decoration: none;
+    font-size: 1.5vw;
+}
+
+/* .buttons {
+    min-width: 10vw;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.buttons:hover {
+    background-color: rgb(231, 231, 231);
+    cursor: pointer;
+}
+
+.buttons:active {
+    background-color: rgb(197, 197, 197);
+    cursor: pointer;
+} */
+
+.buttons#auth-btns {
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.buttons#auth-btns:hover {
+    background-color: purple;
+    cursor: pointer;
+}
+
+.buttons#auth-btns:active {
+    color: lightgray;
+    cursor: pointer;
+}
+
+.buttons#landing-topright {
+    margin: 0 0 0 1vw;
+    min-width: 10vw;
+    /* transition: background-color 0.3s ease, transform 0.2s ease; */
+}
+
+.buttons#landing-topright:hover {
+    color: #000000; /* Darker color for the text */
+    cursor: pointer;
+    /* outline: 1px solid #2d2d2d; */
+    
+}
+
+.buttons#landing-topright:active {
+    background-color: rgb(231, 231, 231);
+    cursor: pointer;
+}
+
+/* Responsive Styles */
+@media (min-width: 768px) {
+    .hero {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .hero-content {
+        text-align: left;
+        max-width: 40vw;
+    }
+
+    .hero-image img {
+        width: 40vw;
+    }
+}
+
+@media (min-width: 1024px) {
+    .hero-content {
+        max-width: 35vw;
+    }
+
+    .hero-image img {
+        width: 35vw;
+    }
+}
