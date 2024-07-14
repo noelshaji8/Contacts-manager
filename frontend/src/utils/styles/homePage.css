@@ -1,0 +1,139 @@
+.container {
+    height: 100vh;
+    width: 100vw;
+    position: relative;
+    
+}
+
+.container h3 {
+    margin: 0;
+    padding: 3vh 6vw;
+    color: #333;
+    text-align: start;
+}
+
+
+.contact-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2vw;
+    justify-content: center;
+}
+
+.contact-card {
+    cursor: pointer;
+    background: #efefef;
+    border-radius: 15px;
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.15), -4px -4px 8px rgba(255, 255, 255, 0.7);
+    padding: 1.5vh 1.5vw;
+    width: 21vw;
+    height: 15vh;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+    transition: box-shadow 0.3s ease, transform 0.2s ease;
+    overflow: hidden;
+    white-space: wrap;
+}
+
+.contact-card:hover {
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.15), -4px -4px 8px rgba(255, 255, 255, 0.7);
+    transform: translateY(-5px);
+}
+
+.contact-info {
+    height: 100%;
+    width: 100%;
+    margin: 1vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    color: #0073b1;
+
+}
+
+/* NAVBAR */
+
+.navbar {
+    box-sizing: border-box;
+    width: 100vw;
+    height: 7vh;
+    margin: 0 0 9vh 0;
+    padding: 0 2vw;
+    background: #efefef;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.navbar-btns-grp {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 3vw;
+}
+
+
+.navbar-btns-grp #navbar-btns {
+    color: black;
+    font-weight: 400;
+    transition: background-color 0.3s ease;
+}
+
+.navbar-btns-grp #navbar-btns:hover {
+    cursor: pointer;
+
+}
+
+.navbar-btns-grp #navbar-btns[data-state="checked"] {
+    background-color: lightgrey;
+    font-weight: 450;
+    transition: background-color 0.3s ease;
+}
+
+/* SEARCH BAR */
+
+.searchbar {
+   min-width: 20vw;
+   position: absolute;
+   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.10), -2px -2px 4px rgba(255, 255, 255, 0.5);
+   left: 50%;
+   transform: translate(-50%,-50%);
+  }
+
+  .searchbar #iconbtn:hover{
+    cursor: pointer;
+  }
+  
+
+  
+
+
+@media (max-width: 768px) {
+    .navbar-btns-grp {
+        flex-direction: row;
+    }
+
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .contact-card {
+        width: calc(45% - 2vw);
+    }
+}
+
+@media (max-width: 768px) {
+    .contact-card {
+        width: calc(90% - 2vw);
+    }
+}

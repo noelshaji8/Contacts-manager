@@ -2,7 +2,6 @@ import React from 'react';
 import "../utils/styles/landingPage.css"
 import landingPic from "../utils/landingpage.png"
 import { Button } from '@radix-ui/themes';
-import '@radix-ui/themes/styles.css';
 
 function LandingPage() {
     return (
