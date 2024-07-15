@@ -2,14 +2,7 @@
     height: 100vh;
     width: 100vw;
     position: relative;
-    
-}
 
-.container h3 {
-    margin: 0;
-    padding: 3vh 6vw;
-    color: #333;
-    text-align: start;
 }
 
 
@@ -18,6 +11,25 @@
     flex-wrap: wrap;
     gap: 2vw;
     justify-content: center;
+}
+
+.under-searchbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0;
+    padding: 5vh 6vw 2vh ;
+}
+
+.under-searchbar h3{
+    color: #333;
+}
+
+.under-searchbar #btn{
+    background-color: lightgrey;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+    color: rgb(39, 39, 39);
 }
 
 .contact-card {
@@ -75,7 +87,7 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%,-50%);
+    transform: translate(-50%, -50%);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -100,22 +112,23 @@
     transition: background-color 0.3s ease;
 }
 
+.navbar-profile{
+    cursor: pointer;
+}
+
 /* SEARCH BAR */
 
 .searchbar {
-   min-width: 20vw;
-   position: absolute;
-   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.10), -2px -2px 4px rgba(255, 255, 255, 0.5);
-   left: 50%;
-   transform: translate(-50%,-50%);
-  }
+    min-width: 20vw;
+    position: absolute;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.10), -2px -2px 4px rgba(255, 255, 255, 0.5);
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
 
-  .searchbar #iconbtn:hover{
+.searchbar #iconbtn:hover {
     cursor: pointer;
-  }
-  
-
-  
+}
 
 
 @media (max-width: 768px) {
