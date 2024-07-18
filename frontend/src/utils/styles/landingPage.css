@@ -97,20 +97,6 @@ header nav a {
     font-size: 1.5vw;
 }
 
-/* .buttons {
-    min-width: 10vw;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-.buttons:hover {
-    background-color: rgb(231, 231, 231);
-    cursor: pointer;
-}
-
-.buttons:active {
-    background-color: rgb(197, 197, 197);
-    cursor: pointer;
-} */
 
 .buttons#auth-btns {
     transition: background-color 0.3s ease, transform 0.2s ease;

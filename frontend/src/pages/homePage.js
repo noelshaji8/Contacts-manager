@@ -4,34 +4,36 @@ import '@radix-ui/themes/styles.css';
 import ContactCard from "../components/contactCard"
 import NavBar from "../components/navBar";
 import SearchBar from '../components/searchBar';
-import { Button } from '@radix-ui/themes';
-import { MagnifyingGlassIcon } from '@radix-ui/react-icons';
+import AddContact from '../components/addContact';
+import ContactDisplayCard from '../components/contactDisplayCard';
+import GroupCard from '../components/groupCard';
+import AddGroup from '../components/addGroup';
+import GroupDisplayCard from '../components/groupDisplayCard';
 
 function HomePage() {
     return (
         <div class="container">
             <NavBar />
-            <SearchBar />
+            <GroupDisplayCard/>
+            {/* <SearchBar />
             <div className='under-searchbar'>            
                 <h3>Contact List (19)</h3>
-                <Button id='btn' radius='large'>
-                    Add Contact
-                </Button>
+                <AddGroup/>
             </div>
             <div class="contact-list">
-                <ContactCard />
-                <ContactCard />
-                <ContactCard />
-                <ContactCard />
-                <ContactCard />
-                <ContactCard />
-                <ContactCard />
-                <ContactCard />
-                <ContactCard />
-                <ContactCard />
-                <ContactCard />
-                <ContactCard />
-            </div>
+                <GroupCard />
+                <GroupCard />
+                <GroupCard />
+                <GroupCard />
+                <GroupCard />
+                <GroupCard />
+                <GroupCard />
+                <GroupCard />
+                <GroupCard />
+                <GroupCard />
+                <GroupCard />
+                <GroupCard />
+            </div> */}
         </div>
     );
 }

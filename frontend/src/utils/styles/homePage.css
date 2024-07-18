@@ -2,34 +2,15 @@
     height: 100vh;
     width: 100vw;
     position: relative;
-
 }
 
+/* CARDS */
 
 .contact-list {
     display: flex;
     flex-wrap: wrap;
     gap: 2vw;
     justify-content: center;
-}
-
-.under-searchbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 0;
-    padding: 5vh 6vw 2vh ;
-}
-
-.under-searchbar h3{
-    color: #333;
-}
-
-.under-searchbar #btn{
-    background-color: lightgrey;
-    transition: background-color 0.3s ease;
-    cursor: pointer;
-    color: rgb(39, 39, 39);
 }
 
 .contact-card {
@@ -67,6 +48,21 @@
 
 }
 
+.group-info {
+    height: 100%;
+    width: 100%;
+    margin: 1vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    color: #0073b1;
+}
+
+.group-info h4{
+    margin: 0;
+}
 /* NAVBAR */
 
 .navbar {
@@ -124,11 +120,33 @@
     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.10), -2px -2px 4px rgba(255, 255, 255, 0.5);
     left: 50%;
     transform: translate(-50%, -50%);
+    border-radius: auto;
+    
 }
 
 .searchbar #iconbtn:hover {
     cursor: pointer;
 }
+
+.under-searchbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0;
+    padding: 3vh 6vw 2vh ;
+}
+
+.under-searchbar h3{
+    color: #333;
+}
+
+.under-searchbar #btn{
+    background-color: lightgrey;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+    color: rgb(39, 39, 39);
+}
+
 
 
 @media (max-width: 768px) {

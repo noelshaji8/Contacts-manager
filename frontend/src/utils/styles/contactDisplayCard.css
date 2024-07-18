@@ -1,0 +1,94 @@
+.contact-display {
+    display: flex;
+    flex-direction: row;
+    gap: 5vh;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.left {
+    gap: 5vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.contact-title {
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: lightgrey;
+    width: 20vw;
+    height: 25vh;
+
+}
+
+.options {
+    border-radius: 10px;
+    background-color: lightgrey;
+    width: 20vw;
+    height: 25vh;
+}
+
+.options h2 {
+    margin-bottom: 5vh;
+}
+
+.contact-details {
+    border-radius: 10px;
+    background-color: lightgrey;
+    width: 45vw;
+    height: 55vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.contact-details #save-btn {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin: 2.5vh;
+}
+
+.textarea {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: start;
+}
+
+/* GROUP DISPLAY */
+
+
+
+.group-details {
+    border-radius: 10px;
+    background-color: lightgrey;
+    width: 45vw;
+    height: 55vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: start;
+    box-sizing: border-box;
+    padding: 3vh 3vw;
+}
+
+.group-details #save-btn {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin: 2.5vh;
+}
+
+.group-textarea {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: start;
+    width: 100%;
+    margin-bottom: 5vh;
+}

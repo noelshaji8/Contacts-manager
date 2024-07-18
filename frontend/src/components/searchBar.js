@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { MagnifyingGlassIcon } from '@radix-ui/react-icons';
 import "../utils/styles/homePage.css"
-import { TextField, IconButton } from '@radix-ui/themes';
+import { TextField, IconButton} from '@radix-ui/themes';
 import '@radix-ui/themes/styles.css';
 
 function SearchBar() {
@@ -14,15 +14,17 @@ function SearchBar() {
     };
 
     return (
-        <div className='searchbar'>
-            <TextField.Root variant='classic' color='teal' placeholder="Search for contact…">
+        
+            <TextField.Root className='searchbar' radius='large' variant='surface' color='teal' placeholder="Search for contact…">
                 <TextField.Slot side='right'>
                     <IconButton id='iconbtn' variant='ghost' color='teal' >
                         <MagnifyingGlassIcon height="16" width="16" />
                     </IconButton>
                 </TextField.Slot>
             </TextField.Root>
-        </div>
+  
+
+
     );
 }
 
