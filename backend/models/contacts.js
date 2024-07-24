@@ -7,34 +7,31 @@ const Schema = mongoose.Schema
 const contactSchema = new Schema({
     uid: {
         type: Number,
-        required: true
+        required: true,
     },
     name: {
         type: String,
         required: true,
-        unique: true
     },
     phone_no: {
         type: String,
         required: true,
-        unique: true
     },
     alt_phone_no: {
         type: String,
-        unique: true        
     },
     email: {
         type: String,
-        unique: true
     },
     address: {
-        type: String
+        type: String,
     },
-    group: {
-        type: String
+    company: {
+        type: String,
     }
 }, { timestamps: true })
 
+contactSchema.index({ uid: 1, name: 1 }, { unique: true });
 const Contact = mongoose.model("Contact", contactSchema)
 
 module.exports = Contact

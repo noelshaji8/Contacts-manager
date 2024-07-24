@@ -2,7 +2,8 @@ const jwt = require("jsonwebtoken")
 
 function authenticateToken(req, res, next) {
 
-    const accessSecret = "8d245805079f46dd71f9a436adab2153456cd759f2463841e647c1dbf669a18e5119b4131780fd47c7a26eaceecba249a189150615b235353e43a11a4434eafb"
+    const accessSecret = process.env.ACCESS_SECRET
+    console.log(accessSecret)
 
      //TOKEN READ FROM COOKIES
     const token = req.cookies.token;

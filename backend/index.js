@@ -5,9 +5,12 @@ const mongoose = require("mongoose")
 const crudRoutes = require("./routes/crudRoutes")
 const cookieParser = require("cookie-parser");
 const cors = require("cors")
+const dotenv = require('dotenv');
+
+dotenv.config();
 
 const corsOptions = {
-    origin: '*',
+    origin: 'http://localhost:3000',
     credentials: true,            //access-control-allow-credentials:true
     optionSuccessStatus: 200,
     methods: ["GET", "POST", "DELETE", "UPDATE", "PUT", "PATCH"],
@@ -19,13 +22,10 @@ app.use(express.urlencoded({ extended: true }))
 app.use(cors(corsOptions));
 app.use(cookieParser());
 
-
-const dbUrl = 'mongodb+srv://noelshaji:987654321@practice-mongodb.vuoqpkx.mongodb.net/contacts-app?retryWrites=true&w=majority&appName=practice-mongodb'
-
 //CONNECT TO MONGO DB
-mongoose.connect(dbUrl)
+mongoose.connect(process.env.DB_URL)
     .then((result) => {
-        app.listen(4000, function () {
+        app.listen(process.env.PORT, function () {
             console.log("Server is running & Connected to Database!")
         })
     })

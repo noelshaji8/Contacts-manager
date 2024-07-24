@@ -8,11 +8,11 @@ const createContact = (req, res) => {
         alt_phone_no: req.body.alt_phone_no,
         email: req.body.email,
         address: req.body.address,
-        group: req.body.group,
+        company: req.body.company,
     })
     contact.save()
         .then((result) => { res.send(result) })
-        .catch(() => { res.status(400).send("error") })
+        .catch((error) => { res.status(400).send(error) })
 }
 
 const readContacts = (req, res) => {

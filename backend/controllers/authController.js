@@ -3,8 +3,6 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken")
 const User = require("../models/user");
 
-const accessSecret = "8d245805079f46dd71f9a436adab2153456cd759f2463841e647c1dbf669a18e5119b4131780fd47c7a26eaceecba249a189150615b235353e43a11a4434eafb"
-
 const signUp = async (req, res) => {
 
     if ((req.body.username) && (req.body.password)) {
@@ -30,6 +28,8 @@ const signUp = async (req, res) => {
 }
 
 const logIn = async (req, res) => {
+
+    const accessSecret = process.env.ACCESS_SECRET
 
     if ((req.body.username) && (req.body.password)) {
         const checkFunction = (user) => {
@@ -57,7 +57,7 @@ const logIn = async (req, res) => {
         }
 
         //TOKEN GENERATION & SET AS COOKIE
-
+        
         const tokenUser = { username: requiredUser.username, password: requiredUser.password, uid: requiredUser.uid }
         const userjwt = tokenUser
         const accessToken = jwt.sign(userjwt, accessSecret)
