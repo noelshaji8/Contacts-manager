@@ -1,9 +1,22 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import "../utils/styles/landingPage.css"
 import landingPic from "../utils/landingpage.png"
 import { Button } from '@radix-ui/themes';
+import { useNavigate, useLocation } from "react-router-dom";
 
 function LandingPage() {
+
+    const navigate = useNavigate();
+    let location = useLocation();
+    let { pathname } = location;
+
+    const toLoginPage = () =>{
+        navigate("/auth/login")
+    }
+    const toSignupPage = () =>{
+        navigate("/auth/signup")
+    }
+
     return (
         <div className="landing-page">
             <div className="header-container">
@@ -18,8 +31,9 @@ function LandingPage() {
                 <div className="hero-content">
                     <h2>Expand your circle and keep them tighter!</h2>
                     <div className="auth-header">
-                    <Button className='buttons' id='auth-btns' size="4" color="cyan" variant="solid" radius='full'>Join Now</Button>
-                    <Button className='buttons' id='auth-btns' size="4" color="cyan" variant="solid" radius='full'>Login</Button>
+                        <Button onClick={toSignupPage} className='buttons' id='auth-btns' size="4" color="cyan" variant="solid" radius='full'>Join Now</Button>
+
+                        <Button onClick={toLoginPage} className='buttons' id='auth-btns' size="4" color="cyan" variant="solid" radius='full'>Login</Button>
 
                     </div>
                 </div>

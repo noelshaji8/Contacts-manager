@@ -1,9 +1,35 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import "../utils/styles/homePage.css"
 import '@radix-ui/themes/styles.css';
 import { Dialog, Button, Flex, Text, TextField, Select } from '@radix-ui/themes';
+import { createContact, readContacts } from '../utils/api';
+import { readContactState } from '../redux/contactsSlice';
+import { useSelector, useDispatch } from 'react-redux';
+
 
 function AddContact() {
+
+    const dispatch = useDispatch()
+
+    const [name, setName] = useState('');
+    const [address, setAddress] = useState('');
+    const [phoneNo, setPhoneNo] = useState('');
+    const [altphoneNo, setAltPhoneNo] = useState('');
+    const [email, setEmail] = useState('');
+    const [company, setCompany] = useState('');
+
+    const contactAddHandle = async () => {
+        await createContact({
+            name: name,
+            phone_no: phoneNo,
+            alt_phone_no: altphoneNo,
+            email: email,
+            address: address,
+            company: company,
+        })
+        const loggedContacts = await readContacts()
+        dispatch(readContactState(loggedContacts))
+    }
     return (
 
         <Dialog.Root>
@@ -14,7 +40,7 @@ function AddContact() {
             <Dialog.Content maxWidth="450px">
                 <Dialog.Title>Add Contact</Dialog.Title>
                 <Dialog.Description size="2" mb="4">
-                   Enter the contact details
+                    Enter the contact details
                 </Dialog.Description>
                 <Flex direction="row" justify="between">
                     <Flex direction="column" gap="3" width="12vw">
@@ -22,7 +48,7 @@ function AddContact() {
                             <Text as="div" size="2" mb="1" weight="bold">
                                 Name
                             </Text>
-                            <TextField.Root
+                            <TextField.Root required value={name} onChange={(e) => setName(e.target.value)}
                                 placeholder="Enter full name"
                             />
                         </label>
@@ -30,7 +56,7 @@ function AddContact() {
                             <Text as="div" size="2" mb="1" weight="bold">
                                 Phone No.
                             </Text>
-                            <TextField.Root
+                            <TextField.Root required value={phoneNo} onChange={(e) => setPhoneNo(e.target.value)}
                                 placeholder="Enter phone number"
                             />
                         </label>
@@ -38,7 +64,7 @@ function AddContact() {
                             <Text as="div" size="2" mb="1" weight="bold">
                                 Email
                             </Text>
-                            <TextField.Root
+                            <TextField.Root required value={email} onChange={(e) => setEmail(e.target.value)}
                                 placeholder="Enter email"
                             />
                         </label>
@@ -49,7 +75,7 @@ function AddContact() {
                             <Text as="div" size="2" mb="1" weight="bold">
                                 Address
                             </Text>
-                            <TextField.Root
+                            <TextField.Root required value={address} onChange={(e) => setAddress(e.target.value)}
                                 placeholder="Enter address"
                             />
                         </label>
@@ -57,8 +83,16 @@ function AddContact() {
                             <Text as="div" size="2" mb="1" weight="bold">
                                 Alt Phone No.
                             </Text>
-                            <TextField.Root
+                            <TextField.Root required value={altphoneNo} onChange={(e) => setAltPhoneNo(e.target.value)}
                                 placeholder="Enter alternate number"
+                            />
+                        </label>
+                        <label>
+                            <Text as="div" size="2" mb="1" weight="bold">
+                                Company
+                            </Text>
+                            <TextField.Root required value={company} onChange={(e) => setCompany(e.target.value)}
+                                placeholder="Enter company name"
                             />
                         </label>
                         <label>
@@ -89,7 +123,7 @@ function AddContact() {
                         </Button>
                     </Dialog.Close>
                     <Dialog.Close>
-                        <Button>Save</Button>
+                        <Button onClick={contactAddHandle} >Save</Button>
                     </Dialog.Close>
                 </Flex>
             </Dialog.Content>

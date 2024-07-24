@@ -2,7 +2,7 @@ import React from 'react';
 import "../utils/styles/homePage.css"
 import '@radix-ui/themes/styles.css';
 import "../utils/styles/contactDisplayCard.css"
-import { Text, TextField, Flex, Theme, Box, Avatar, Card, Button, Select, TextArea, Table } from '@radix-ui/themes';
+import { Text, TextField, Flex, Theme, Box, Avatar, Card, Button, Select, TextArea, Table, AlertDialog } from '@radix-ui/themes';
 // import * as Select from "@radix-ui/react-select"
 
 function GroupDisplayCard() {
@@ -30,7 +30,33 @@ function GroupDisplayCard() {
                     <h2>Options</h2>
                     <Flex gap="3" justify="center">
                         <Button size="3">Update</Button>
-                        <Button size="3">Delete</Button>
+
+                        <AlertDialog.Root>
+                            <AlertDialog.Trigger>
+                                <Button color="red">Delete</Button>
+                            </AlertDialog.Trigger>
+                            <AlertDialog.Content maxWidth="450px">
+                                <AlertDialog.Title>Revoke access</AlertDialog.Title>
+                                <AlertDialog.Description size="2">
+                                    Are you sure that you want to delete this contact?
+                                </AlertDialog.Description>
+
+                                <Flex gap="3" mt="4" justify="end">
+                                    <AlertDialog.Cancel>
+                                        <Button variant="soft" color="gray">
+                                            Cancel
+                                        </Button>
+                                    </AlertDialog.Cancel>
+                                    <AlertDialog.Action>
+                                        <Button variant="solid" color="red">
+                                            Delete contact
+                                        </Button>
+                                    </AlertDialog.Action>
+                                </Flex>
+                            </AlertDialog.Content>
+                        </AlertDialog.Root>
+
+                        
                     </Flex>
                 </div>
             </div>

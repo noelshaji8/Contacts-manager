@@ -125,10 +125,6 @@ header nav a {
     
 }
 
-.buttons#landing-topright:active {
-    background-color: rgb(231, 231, 231);
-    cursor: pointer;
-}
 
 /* Responsive Styles */
 @media (min-width: 768px) {

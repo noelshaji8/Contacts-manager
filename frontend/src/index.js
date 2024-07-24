@@ -5,13 +5,17 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Theme } from '@radix-ui/themes';
 import '@radix-ui/themes/styles.css';
+import { Provider } from "react-redux"
+import store from '../src/redux/store';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <Theme>
-      <App />
-    </Theme>
+    <Provider store={store}>
+      <Theme>
+        <App />
+      </Theme>
+    </Provider>
   </React.StrictMode>
 );
 
