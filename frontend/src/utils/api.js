@@ -64,3 +64,12 @@ export const deleteContact = async contactData => {
         throw error.response.data;
     }
 };
+
+export const updateUserInfo = async userData => {
+    try {
+        const response = await axios.patch(`${API_URL}/user/update`, userData, { withCredentials: true });        
+        return response.data;
+    } catch (error) {
+        throw error.response.data;
+    }
+};

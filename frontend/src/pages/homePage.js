@@ -12,6 +12,7 @@ import GroupDisplayCard from '../components/groupDisplayCard';
 import { useSelector } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
 import ReactPaginate from 'react-paginate';
+import UserDisplayCard from '../components/userDisplayCard';
 
 function HomePage() {
 
@@ -36,7 +37,7 @@ function HomePage() {
             <Routes>
                 <Route exact path='/' element={
                     <div>
-                        <SearchBar />
+                        <h1>Contacts</h1>
                         <div className='under-searchbar'>
                             <h3>Contact List (19)</h3>
                             <AddContact />
@@ -62,6 +63,8 @@ function HomePage() {
                 }>
                 </Route>
                 <Route path='/contact' element={<ContactDisplayCard />}>
+                </Route>
+                <Route path='/user' element={<UserDisplayCard />}>
                 </Route>
             </Routes>
         </div>

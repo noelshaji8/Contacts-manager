@@ -60,16 +60,17 @@
     color: #0073b1;
 }
 
-.group-info h4{
+.group-info h4 {
     margin: 0;
 }
+
 /* NAVBAR */
 
 .navbar {
     box-sizing: border-box;
     width: 100vw;
     height: 7vh;
-    margin: 0 0 9vh 0;
+
     padding: 0 2vw;
     background: #efefef;
     display: flex;
@@ -80,10 +81,10 @@
 }
 
 .navbar-btns-grp {
-    position: absolute;
+    /* position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%); */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -108,39 +109,70 @@
     transition: background-color 0.3s ease;
 }
 
-.navbar-profile{
+.navbar-profile {
     cursor: pointer;
 }
 
 /* SEARCH BAR */
 
 .searchbar {
-    min-width: 20vw;
-    position: absolute;
+    min-width: 25vw;
     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.10), -2px -2px 4px rgba(255, 255, 255, 0.5);
-    left: 50%;
-    transform: translate(-50%, -50%);
     border-radius: auto;
-    
+
 }
 
 .searchbar #iconbtn:hover {
     cursor: pointer;
 }
 
+
+.search-result {
+    padding: 10px 20px;
+}
+
+.search-result:hover {
+    background-color: #efefef;
+}
+
+.results-list {
+    width: 100%;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 10px #ddd;
+    border-radius: 10px;
+    margin-top: 2px;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.search-components {
+    position: absolute;
+    left: 50%;
+    top: 25%;
+    margin: 0 -12.5vw;
+
+}
+
+.container h1 {
+    margin: 6vh 0 0 0;
+}
+
+
 .under-searchbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin: 0;
-    padding: 3vh 6vw 2vh ;
+    padding: 1vh 6vw 6vh;
 }
 
-.under-searchbar h3{
+.under-searchbar h3 {
     color: #333;
 }
 
-.under-searchbar #btn{
+.under-searchbar #btn {
     background-color: lightgrey;
     transition: background-color 0.3s ease;
     cursor: pointer;
@@ -151,7 +183,7 @@
 /* PAGINATION */
 
 
-  .paginationBttns {
+.paginationBttns {
     width: auto;
     height: 10vh;
     position: absolute;
@@ -197,26 +229,32 @@
     border-color: #ddd;
 }
 
-.previousBttn, .nextBttn {
+.previousBttn,
+.nextBttn {
     width: 80px;
     display: inline-block;
 }
 
-.previousBttn a, .nextBttn a {    
+.previousBttn a,
+.nextBttn a {
     padding: 10px 20px;
 }
 
-.previousBttn a:hover, .nextBttn a:hover {
+.previousBttn a:hover,
+.nextBttn a:hover {
     background-color: #0056b3;
     border-color: #0056b3;
 }
+
+/* Responsive Design */
 
 @media (max-width: 600px) {
     .paginationBttns a {
         padding: 8px 12px;
     }
 
-    .previousBttn a, .nextBttn a {
+    .previousBttn a,
+    .nextBttn a {
         padding: 8px 15px;
     }
 }
@@ -229,7 +267,7 @@
 
 }
 
-/* Responsive Design */
+
 @media (max-width: 1024px) {
     .contact-card {
         width: calc(45% - 2vw);

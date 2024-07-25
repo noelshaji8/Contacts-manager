@@ -14,17 +14,16 @@ function NavBar() {
     const navigate = useNavigate();
 
     const [selected, setSelected] = useState('edit1');
-    const user = useSelector((state) => state.user)
-
-    
+    const user = useSelector((state) => state.user)   
 
     const handleUserContact= ()=>{
-        navigate("/home/contact")
+        navigate("/home/user")
     }
 
     return (
         <div className="navbar">
             <div className='navbar-title'>Company</div>
+            <SearchBar/>
 
             <RadioGroup.Root className="navbar-btns-grp" value={selected} onValueChange={setSelected}>
                 <RadioGroup.Item value="edit1" id="edit1" asChild>
@@ -33,14 +32,9 @@ function NavBar() {
                 <RadioGroup.Item value="edit2" id="edit2" asChild>
                     <Button id='navbar-btns' size="3" radius='full' variant="ghost" color='gray'>Groups</Button>
                 </RadioGroup.Item>
-                <RadioGroup.Item value="edit3" id="edit3" asChild>
-                    <Button  id='navbar-btns' size="3" radius='full' variant="ghost" color='gray'>Search</Button>
-                </RadioGroup.Item>
-            </RadioGroup.Root>
-
-            <div className='navbar-profile'>
+                <div className='navbar-profile'>
                 <Box >
-                    <Card size="1" variant='ghost'>
+                    <Card onClick={handleUserContact} size="1" variant='ghost'>
                         <Flex gap="3" align="center">
                             <Text as="div" size="3" weight="regular">
                                { user.username}
@@ -49,7 +43,8 @@ function NavBar() {
                         </Flex>
                     </Card>
                 </Box>
-            </div>
+            </div>                
+            </RadioGroup.Root>         
         </div>
 
     );
