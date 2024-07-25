@@ -1,4 +1,5 @@
 const Contact = require("../models/contacts")
+const User = require("../models/user");
 
 const createContact = (req, res) => {
     const contact = new Contact({
@@ -61,10 +62,21 @@ const deleteContact = (req, res) => {
         })
 }
 
+const updateUserInfo = (req, res) => {
+    User.findOneAndUpdate({ _id: req.body._id, uid: req.user.uid }, req.body, { new: true })
+    .then((result) => {
+        res.send(result)        
+    })
+    .catch((err) => {
+        res.send(err)       
+    })
+}
+
 module.exports = {
     createContact,
     readContacts,
     searchContact,
     updateContact,
-    deleteContact
+    deleteContact,
+    updateUserInfo
 }

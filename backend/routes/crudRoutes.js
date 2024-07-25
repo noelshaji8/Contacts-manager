@@ -12,4 +12,6 @@ router.patch("/update", contactController.updateContact)
 
 router.delete("/delete", contactController.deleteContact)
 
+router.patch("/user/update", contactController.updateUserInfo)
+
 module.exports = router

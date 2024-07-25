@@ -19,6 +19,29 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
+    phone_no: {
+        type: String,
+    },
+    alt_phone_no: {
+        type: String,
+    },
+    email: {
+        type: String,
+    },
+    address: {
+        type: String,
+    },
+    company: {
+        type: String,
+    },
+    gender: {
+        type: String,
+    },
+    dob: {
+        type: String,
+    },
+
+
 }, { timestamps: true })
 
 const User = mongoose.model("User", userSchema)
