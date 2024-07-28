@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { deleteContact, readContacts, updateContact, updateUserInfo } from '../utils/api';
 import { readContactState } from '../redux/contactsSlice';
 import { useNavigate } from "react-router-dom";
+import { info } from '../redux/userSlice';
 
 function UserDisplayCard() {
 
@@ -42,8 +43,8 @@ function UserDisplayCard() {
             gender: gender,
             dob: dob
         })
-        
         setIsDisabled(true)
+        dispatch(info(response))
     }
 
     return (

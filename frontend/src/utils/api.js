@@ -67,8 +67,9 @@ export const deleteContact = async contactData => {
 
 export const updateUserInfo = async userData => {
     try {
-        const response = await axios.patch(`${API_URL}/user/update`, userData, { withCredentials: true });        
+        const response = await axios.patch(`${API_URL}/user/update`, userData, { withCredentials: true });       
         return response.data;
+        
     } catch (error) {
         throw error.response.data;
     }

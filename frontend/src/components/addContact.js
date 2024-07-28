@@ -27,7 +27,7 @@ function AddContact() {
             address: address,
             company: company,
         })
-        const loggedContacts = await readContacts()
+        const loggedContacts = await readContacts()            
         dispatch(readContactState(loggedContacts))
     }
     return (

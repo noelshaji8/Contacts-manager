@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import "../utils/styles/homePage.css"
 import '@radix-ui/themes/styles.css';
 import ContactCard from "../components/contactCard"
@@ -9,18 +9,21 @@ import ContactDisplayCard from '../components/contactDisplayCard';
 import GroupCard from '../components/groupCard';
 import AddGroup from '../components/addGroup';
 import GroupDisplayCard from '../components/groupDisplayCard';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
 import ReactPaginate from 'react-paginate';
 import UserDisplayCard from '../components/userDisplayCard';
+import { readContacts } from '../utils/api';
+import { readContactState } from '../redux/contactsSlice';
 
 function HomePage() {
 
-    const contactsFromDB = useSelector((state) => state.contacts)
-    const [contacts, setContacts] = useState(contactsFromDB.contacts)
+    const dispatch = useDispatch()
+    const contacts = useSelector((state) => state.contacts.contacts)
+
     const [pgNo, setPgNo] = useState(0)
 
-    const contactsPerPage = 12
+    const contactsPerPage = 8
     const pagesVisited = pgNo * contactsPerPage
     const pageCount = Math.ceil(contacts.length / contactsPerPage)
 
@@ -32,7 +35,7 @@ function HomePage() {
 
     return (
 
-        <div class="container">
+        <div className="container">
             <NavBar />
             <Routes>
                 <Route exact path='/' element={
@@ -42,7 +45,7 @@ function HomePage() {
                             <h3>Contact List (19)</h3>
                             <AddContact />
                         </div>
-                        <div class="contact-list">
+                        <div className="contact-list">
                             {displayContacts}
                         </div>
                         <ReactPaginate

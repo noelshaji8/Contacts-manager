@@ -41,6 +41,8 @@ function ContactDisplayCard() {
             company: company
         })
         setIsDisabled(true)
+        const loggedContacts = await readContacts()            
+        dispatch(readContactState(loggedContacts))
     }
 
     return (

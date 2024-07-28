@@ -18,9 +18,9 @@ function ContactCard({ contact }) {
     }
 
     return (
-        <div onClick={handleSingleContact} class="contact-card">
+        <div onClick={handleSingleContact} className="contact-card">
             <Avatar size="5" radius="full" fallback={contact.name[0]} />
-            <div class="contact-info">
+            <div className="contact-info">
                 <h2>{contact.name}</h2>
             </div>
         </div>

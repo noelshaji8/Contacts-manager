@@ -7,7 +7,7 @@ import { Route, Routes } from "react-router-dom";
 
 function AuthPage() {
     return (
-        <div class="container">
+        <div className="container">
             <Routes>
                 <Route path="/login" element={<LoginForm />}></Route>
                 <Route path="/signup" element={<SignUpForm />} ></Route>

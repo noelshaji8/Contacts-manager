@@ -4,6 +4,7 @@ import { Card, Button, Flex, Callout } from '@radix-ui/themes';
 import { signupUser } from '../utils/api';
 import React, { useState, useRef, useEffect } from 'react';
 import { CheckIcon, Cross2Icon } from '@radix-ui/react-icons'
+import { Link } from 'react-router-dom';
 
 function SignUpForm() {
 
@@ -42,7 +43,7 @@ function SignUpForm() {
     }
 
     return (
-        <div className='container'>
+        <div>
             <Card className='Card'>
                 <h2>Sign Up</h2>
                 <Form.Root className="FormRoot">
@@ -86,7 +87,7 @@ function SignUpForm() {
                         </Form.Field>
                     </Flex>
 
-                    <div ref={errorMessage} className='error'></div>
+                    <div ref={errorMessage} style={{textAlign:"center"}} className='error'></div>
 
                     <Form.Submit asChild>
                         <Button className="Button" onClick={signUpHandle} style={{ marginTop: "4vh" }}>
@@ -94,6 +95,9 @@ function SignUpForm() {
                         </Button>
                     </Form.Submit>
                 </Form.Root>
+                <div style={{margin:"3vh 0 1vh 0 ", textAlign:"center"}}>Already registered? 
+                    <Link style={{textDecoration:"none"}} to="/auth/login"> Login</Link>
+                </div>
             </Card>
 
         </div>

@@ -7,7 +7,7 @@ import {  Avatar } from '@radix-ui/themes';
 function GroupCard() {
 
     return (
-    <div class="contact-card">            
+    <div className="contact-card">            
             <div class="group-info">
                 <h2>Engineers</h2>
                 <h4>Members: 4</h4>                

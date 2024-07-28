@@ -21,10 +21,10 @@ function LoginForm() {
     const loginHandle = async () => {
         try {
             const loggedUser = await loginUser({ username: username, password: password })
-            const loggedContacts = await readContacts()
+            dispatch(login(loggedUser))
             errorMessage.current.style.margin = "0";
             errorMessage.current.innerText = ""
-            dispatch(login(loggedUser))
+            const loggedContacts = await readContacts()            
             dispatch(readContactState(loggedContacts))
             navigate("/home")
 

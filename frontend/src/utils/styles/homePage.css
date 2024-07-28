@@ -116,7 +116,7 @@
 /* SEARCH BAR */
 
 .searchbar {
-    min-width: 25vw;
+    width: 25vw;
     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.10), -2px -2px 4px rgba(255, 255, 255, 0.5);
     border-radius: auto;
 
