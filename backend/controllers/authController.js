@@ -11,7 +11,11 @@ const signUp = async (req, res) => {
             const salt = await bcrypt.genSalt()
             const hashPassword = await bcrypt.hash(req.body.password, salt)
             const uid = Math.floor(Math.random() * 1000)
-            const user = new User({ uid: uid, username: req.body.username, password: hashPassword })
+            const user = new User({
+                uid: uid,
+                username: req.body.username,
+                password: hashPassword,
+            })
             user.save()
                 .then((result) => {
                     res.send(result);
@@ -57,7 +61,7 @@ const logIn = async (req, res) => {
         }
 
         //TOKEN GENERATION & SET AS COOKIE
-        
+
         const tokenUser = { username: requiredUser.username, password: requiredUser.password, uid: requiredUser.uid }
         const userjwt = tokenUser
         const accessToken = jwt.sign(userjwt, accessSecret)

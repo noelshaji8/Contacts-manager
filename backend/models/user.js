@@ -21,24 +21,31 @@ const userSchema = new Schema({
     },
     phone_no: {
         type: String,
+        default:""
     },
     alt_phone_no: {
         type: String,
+        default:""
     },
     email: {
         type: String,
+        default:""
     },
     address: {
         type: String,
+        default:""
     },
     company: {
         type: String,
+        default:""
     },
     gender: {
         type: String,
+        default:""
     },
     dob: {
         type: String,
+        default:""
     },
 
 
