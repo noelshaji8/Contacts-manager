@@ -10,6 +10,7 @@ const createContact = (req, res) => {
         email: req.body.email,
         address: req.body.address,
         company: req.body.company,
+        pfp: req.body.pfp
     })
     contact.save()
         .then((result) => { res.send(result) })

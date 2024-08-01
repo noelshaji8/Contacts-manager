@@ -28,6 +28,9 @@ const contactSchema = new Schema({
     },
     company: {
         type: String,
+    },
+    pfp: {
+        type: String
     }
 }, { timestamps: true })
 

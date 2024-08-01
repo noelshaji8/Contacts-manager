@@ -47,6 +47,10 @@ const userSchema = new Schema({
         type: String,
         default:""
     },
+    pfp: {
+        type: String,
+        default:""
+    },
 
 
 }, { timestamps: true })
