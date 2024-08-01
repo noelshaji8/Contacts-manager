@@ -1,18 +1,20 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import "../utils/styles/homePage.css"
 import '@radix-ui/themes/styles.css';
 import "../utils/styles/contactDisplayCard.css"
 import { Text, TextField, Flex, Theme, Box, Avatar, Card, Button, Select, AlertDialog } from '@radix-ui/themes';
 import { useSelector, useDispatch } from 'react-redux';
 import { deleteContact, readContacts, updateContact } from '../utils/api';
-import { readContactState } from '../redux/contactsSlice';
+import { readContactState, update } from '../redux/contactsSlice';
 import { useNavigate } from "react-router-dom";
+import { useFilePicker } from 'use-file-picker';
+import { FileAmountLimitValidator, FileTypeValidator, FileSizeValidator, ImageDimensionsValidator, } from 'use-file-picker/validators';
 
 function ContactDisplayCard() {
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    
+
     const contact = useSelector((state) => state.contacts.singleContact)
 
     const [name, setName] = useState(contact.name);
@@ -21,13 +23,58 @@ function ContactDisplayCard() {
     const [altphoneNo, setAltPhoneNo] = useState(contact.alt_phone_no);
     const [email, setEmail] = useState(contact.email);
     const [company, setCompany] = useState(contact.company);
+    const [pfp, setPfp] = useState(contact.pfp);
     const [isDisabled, setIsDisabled] = useState(true)
+
+    const { openFilePicker, filesContent, loading, errors } = useFilePicker({
+        readAs: 'DataURL',
+        accept: 'image/*',
+        multiple: true,
+        validators: [
+            new FileAmountLimitValidator({ max: 1 }),
+            new FileTypeValidator(['jpg', 'jpeg', 'png']),
+            new FileSizeValidator({ maxFileSize: 5 * 1024 * 1024 }),
+            // new ImageDimensionsValidator({
+            //     maxHeight: 900, // in pixels
+            //     maxWidth: 1600,
+            //     minHeight: 600,
+            //     minWidth: 768,
+            // }),
+        ],
+    });
+
+    useEffect(() => {
+        const image = filesContent.map((file, index) => file.content);
+        image[0] && setPfp(image[0])
+    }, [filesContent])
+
+    useEffect(() => {
+        setName(contact.name)
+        setAddress(contact.address)
+        setPhoneNo(contact.phone_no)
+        setAltPhoneNo(contact.alt_phone_no)
+        setEmail(contact.email)
+        setCompany(contact.company)
+        setPfp(contact.pfp)
+    }, [contact])
 
     const contactDeleteHandle = async () => {
         await deleteContact({ _id: contact._id })
         const loggedContacts = await readContacts()
         dispatch(readContactState(loggedContacts))
         navigate(-1)
+        dispatch(update({ title: "Contact Deleted" }))
+    }
+
+    const cancelUpdate = () => {
+        setName(contact.name)
+        setAddress(contact.address)
+        setPhoneNo(contact.phone_no)
+        setAltPhoneNo(contact.alt_phone_no)
+        setEmail(contact.email)
+        setCompany(contact.company)
+        setPfp(contact.pfp)
+        setIsDisabled(true)
     }
 
     const contactUpdateHandle = async () => {
@@ -38,11 +85,13 @@ function ContactDisplayCard() {
             alt_phone_no: altphoneNo,
             email: email,
             address: address,
-            company: company
+            company: company,
+            pfp: pfp
         })
         setIsDisabled(true)
-        const loggedContacts = await readContacts()            
+        const loggedContacts = await readContacts()
         dispatch(readContactState(loggedContacts))
+        dispatch(update({ title: "Contact Updated" }))
     }
 
     return (
@@ -52,26 +101,26 @@ function ContactDisplayCard() {
 
                     <Card size="3" variant='ghost' style={{ margin: "0" }}>
                         <Flex gap="6" align="center" direction="row">
-                            <Avatar size="7" radius="medium" fallback={contact.name[0]} color="indigo" />
+                            <Avatar src={pfp} size="7" radius="medium" fallback={contact.name[0]} color="indigo" />
                             <Box>
                                 <Text as="div" size="7" weight="bold">
                                     {contact.name}
                                 </Text>
-
                             </Box>
                         </Flex>
                     </Card>
+                    <Button onClick={() => openFilePicker()} disabled={isDisabled} size="1" variant='soft'>Edit profile picture</Button>
 
                 </div>
                 <div className='options'>
                     <h2>Options</h2>
                     <Flex gap="3" justify="center">
 
-                        <Button onClick={()=>setIsDisabled(false)} size="3">Update</Button>
+                        <Button onClick={() => isDisabled ? setIsDisabled(false) : cancelUpdate()} size="3" style={{ cursor: "pointer" }}>{isDisabled ? "Update" : "Cancel"}</Button>
 
                         <AlertDialog.Root>
                             <AlertDialog.Trigger>
-                                <Button size="3" color="indigo">Delete</Button>
+                                <Button size="3" color="indigo" style={{ cursor: "pointer" }}>Delete</Button>
                             </AlertDialog.Trigger>
                             <AlertDialog.Content maxWidth="450px">
                                 <AlertDialog.Title>Delete contact</AlertDialog.Title>
@@ -81,12 +130,12 @@ function ContactDisplayCard() {
 
                                 <Flex gap="3" mt="4" justify="end">
                                     <AlertDialog.Cancel>
-                                        <Button variant="soft" color="gray">
+                                        <Button style={{ cursor: "pointer" }} variant="soft" color="gray">
                                             Cancel
                                         </Button>
                                     </AlertDialog.Cancel>
                                     <AlertDialog.Action>
-                                        <Button onClick={() => contactDeleteHandle()} variant="solid" color="red">
+                                        <Button style={{ cursor: "pointer" }} onClick={() => contactDeleteHandle()} variant="solid" color="red">
                                             Delete contact
                                         </Button>
                                     </AlertDialog.Action>
@@ -171,7 +220,7 @@ function ContactDisplayCard() {
 
                     </Flex>
                 </Flex>
-                <Button onClick={() => contactUpdateHandle()} id='save-btn' size="3">Save</Button>
+                <Button disabled={isDisabled} onClick={() => contactUpdateHandle()} id='save-btn' size="3">Save</Button>
             </div>
 
         </div>

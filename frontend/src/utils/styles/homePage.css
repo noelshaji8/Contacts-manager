@@ -113,6 +113,8 @@
     cursor: pointer;
 }
 
+/* -------SPLIT HERE------- */
+
 /* SEARCH BAR */
 
 .searchbar {
@@ -133,6 +135,7 @@
 
 .search-result:hover {
     background-color: #efefef;
+    cursor: pointer;
 }
 
 .results-list {

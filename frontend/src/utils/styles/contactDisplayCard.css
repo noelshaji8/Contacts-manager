@@ -17,6 +17,7 @@
 .contact-title {
     border-radius: 10px;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     background-color: lightgrey;
@@ -50,7 +51,7 @@
     position: absolute;
     bottom: 0;
     right: 0;
-    margin: 2.5vh;
+    margin: 2.5vh;cursor: pointer;
 }
 
 .textarea {

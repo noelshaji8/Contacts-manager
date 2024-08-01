@@ -27,9 +27,12 @@ function HomePage() {
     const pagesVisited = pgNo * contactsPerPage
     const pageCount = Math.ceil(contacts.length / contactsPerPage)
 
-    const displayContacts = contacts
+    console.log(contacts);
+
+    const displayContacts = contacts.length > 0 ? contacts
         .slice(pagesVisited, pagesVisited + contactsPerPage)
         .map((contact, i) => (<ContactCard key={i} contact={contact} />))
+        : (<h2 style={{ margin: "15vh 0 " }}>Add some contacts</h2>)
 
     const pageChangeHandle = ({ selected }) => { setPgNo(selected) }
 
@@ -42,7 +45,7 @@ function HomePage() {
                     <div>
                         <h1>Contacts</h1>
                         <div className='under-searchbar'>
-                            <h3>Contact List (19)</h3>
+                            <h3>Contact List ({contacts.length})</h3>
                             <AddContact />
                         </div>
                         <div className="contact-list">

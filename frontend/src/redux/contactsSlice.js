@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
     contacts: [],
     singleContact:[],
+    isUpdated:{}
 };
 
 export const contactsSlice = createSlice({
@@ -17,10 +18,13 @@ export const contactsSlice = createSlice({
      },
      logoutContacts: (state, action)=>{
         state.contacts = []
+     },
+     update:(state, action)=>{
+      state.isUpdated = action.payload
      }
     }
 });
 
-export const {readSingleContactState, readContactState, logoutContacts } = contactsSlice.actions;
+export const {readSingleContactState, readContactState, logoutContacts, update } = contactsSlice.actions;
 
 export default contactsSlice.reducer;

@@ -15,9 +15,7 @@ function NavBar() {
     const navigate = useNavigate();
 
     const [selected, setSelected] = useState('edit1');
-
-    const selector = (state) => state.user
-    const user = useSelector(selector, shallowEqual)
+    const user = useSelector((state) => state.user, shallowEqual)
 
     const handleUserContact = () => {
         navigate("/home/user")
@@ -46,7 +44,7 @@ function NavBar() {
                                 <Text as="div" size="3" weight="regular">
                                     {user.username}
                                 </Text>
-                                <Avatar size="3" radius="full" fallback={user.username[0]} color="indigo" />
+                                <Avatar src={user.info.pfp} size="3" radius="full" fallback={user.username[0]} color="indigo" />
                             </Flex>
                         </Card>
                     </Box>
