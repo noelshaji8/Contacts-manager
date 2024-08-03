@@ -27,7 +27,7 @@ const signUp = async (req, res) => {
         }
     }
     else {
-        res.status(500).send("Invalid input")
+        res.status(500).send("Enter username & password")
     }
 }
 
