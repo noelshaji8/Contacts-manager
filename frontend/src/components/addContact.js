@@ -1,14 +1,14 @@
 import React, { useState, useRef, useEffect } from 'react';
 import "../utils/styles/homePage.css"
 import '@radix-ui/themes/styles.css';
-import { Dialog, Button, Flex, Text, TextField, Select, Avatar } from '@radix-ui/themes';
+import { Dialog, Button, Flex, Text, TextField, Select, Avatar, Em } from '@radix-ui/themes';
 import { createContact, readContacts } from '../utils/api';
 import { readContactState, update } from '../redux/contactsSlice';
 import { useSelector, useDispatch } from 'react-redux';
-import { PersonIcon } from '@radix-ui/react-icons';
+import { CheckCircledIcon, CheckIcon, CrossCircledIcon, PersonIcon } from '@radix-ui/react-icons';
 import { useFilePicker } from 'use-file-picker';
 import { FileAmountLimitValidator, FileTypeValidator, FileSizeValidator, ImageDimensionsValidator, } from 'use-file-picker/validators';
-
+import { validateEmail, validatePhoneNumber, validateUsername, validCheck } from '../utils/inputValidation';
 
 
 function AddContact() {
@@ -22,6 +22,7 @@ function AddContact() {
     const [email, setEmail] = useState('');
     const [company, setCompany] = useState('');
     const [pfp, setPfp] = useState("");
+    const [submitDisabled, setSubmitDisabled] = useState(true)
 
     const { openFilePicker, filesContent, loading, errors } = useFilePicker({
         readAs: 'DataURL',
@@ -40,30 +41,57 @@ function AddContact() {
         ],
     });
 
-    useEffect(() => {
-        const image = filesContent.map((file, index) => file.content);
-        image[0] && setPfp(image[0])       
-    }, [filesContent])
+
 
     const contactAddHandle = async () => {
-        await createContact({
-            name: name,
-            phone_no: phoneNo,
-            alt_phone_no: altphoneNo,
-            email: email,
-            address: address,
-            company: company,
-            pfp: pfp
-        })
-        const loggedContacts = await readContacts()
-        dispatch(readContactState(loggedContacts))
-        dispatch(update({ title: "Contact Added" }))
+
+        try {
+            await createContact({
+                name: name,
+                phone_no: phoneNo,
+                alt_phone_no: altphoneNo,
+                email: email,
+                address: address,
+                company: company,
+                pfp: pfp
+            })
+            const loggedContacts = await readContacts()
+            dispatch(readContactState(loggedContacts))
+            dispatch(update({ title: "Contact Added" }))
+
+
+        } catch (error) {
+            console.log(error);
+        }
+
     }
+
+    const cancelAdd = () => {
+        setName("")
+        setAddress("")
+        setPhoneNo("")
+        setAltPhoneNo("")
+        setEmail("")
+        setCompany("")
+        setPfp()
+    }
+
+    useEffect(() => {
+        const image = filesContent.map((file, index) => file.content);
+        image[0] && setPfp(image[0])
+    }, [filesContent])
+
+
+    useEffect(() => {
+        setSubmitDisabled(!validCheck(name, phoneNo, email, altphoneNo))
+    }, [name, phoneNo, altphoneNo, email])
+
+
     return (
 
         <Dialog.Root>
             <Dialog.Trigger>
-                <Button>Add Contact</Button>
+                <Button style={{ cursor: "pointer" }}>Add Contact</Button>
             </Dialog.Trigger>
 
             <Dialog.Content maxWidth="450px">
@@ -73,37 +101,44 @@ function AddContact() {
                 </Dialog.Description>
                 <Flex direction="row" justify="between">
                     <Flex direction="column" gap="3" width="12vw">
-                      
+
                         <label>
                             <Text as="div" size="2" mb="1" weight="bold">
-                                Name
+                                Name <Em>(required)</Em>
                             </Text>
                             <TextField.Root required value={name} onChange={(e) => setName(e.target.value)}
-                                placeholder="Enter full name"
-                            />
+                                placeholder="Enter full name">
+                                <TextField.Slot side='right'>
+                                    {name === "" ? null : validateUsername(name) ? (<CheckCircledIcon style={{ color: "green" }} />) : <CrossCircledIcon style={{ color: "red" }} />}
+                                </TextField.Slot>
+                            </TextField.Root>
                         </label>
                         <label>
                             <Text as="div" size="2" mb="1" weight="bold">
-                                Phone No.
+                                Phone No. <Em>(required)</Em>
                             </Text>
                             <TextField.Root required value={phoneNo} onChange={(e) => setPhoneNo(e.target.value)}
-                                placeholder="Enter phone number"
-                            />
+                                placeholder="Enter phone number">
+                                <TextField.Slot side='right'>
+                                    {phoneNo === "" ? null : validatePhoneNumber(phoneNo) ? (<CheckCircledIcon style={{ color: "green" }} />) : <CrossCircledIcon style={{ color: "red" }} />}
+                                </TextField.Slot>
+                            </TextField.Root>
                         </label>
                         <label>
                             <Text as="div" size="2" mb="1" weight="bold">
-                                Email
+                                Address
                             </Text>
-                            <TextField.Root required value={email} onChange={(e) => setEmail(e.target.value)}
-                                placeholder="Enter email"
-                            />
+                            <TextField.Root required value={address} onChange={(e) => setAddress(e.target.value)}
+                                placeholder="Enter address">
+
+                            </TextField.Root>
                         </label>
                         <label>
                             <Text as="div" size="2" mb="1" weight="bold">
                                 Profile picture
                             </Text>
                             <Flex direction="row" gap="5" align="center">
-                                <Avatar src={pfp} size="5" radius="medium" color="indigo" fallback={<PersonIcon width="30" height="30" color='gray'/>} />
+                                <Avatar src={pfp} size="5" radius="medium" color="indigo" fallback={<PersonIcon width="30" height="30" color='gray' />} />
                                 <Button onClick={() => openFilePicker()} size="1" variant='soft'>Edit photo</Button>
                             </Flex>
                         </label>
@@ -112,27 +147,38 @@ function AddContact() {
                     <Flex direction="column" gap="3" width="12vw">
                         <label>
                             <Text as="div" size="2" mb="1" weight="bold">
-                                Address
+                                Email
                             </Text>
-                            <TextField.Root required value={address} onChange={(e) => setAddress(e.target.value)}
-                                placeholder="Enter address"
-                            />
+
+                            <TextField.Root required value={email} onChange={(e) => setEmail(e.target.value)}
+                                placeholder="Enter email">
+                                <TextField.Slot side='right'>
+                                    {email === "" ? null : validateEmail(email) ? (<CheckCircledIcon style={{ color: "green" }} />) : <CrossCircledIcon style={{ color: "red" }} />}
+                                </TextField.Slot>
+                            </TextField.Root>
                         </label>
+
                         <label>
                             <Text as="div" size="2" mb="1" weight="bold">
                                 Alt Phone No.
                             </Text>
                             <TextField.Root required value={altphoneNo} onChange={(e) => setAltPhoneNo(e.target.value)}
-                                placeholder="Enter alternate number"
-                            />
+                                placeholder="Enter alternate number">
+                                <TextField.Slot side='right'>
+                                    {altphoneNo === "" ? null : validatePhoneNumber(altphoneNo) ? (<CheckCircledIcon style={{ color: "green" }} />) : <CrossCircledIcon style={{ color: "red" }} />}
+                                </TextField.Slot>
+                            </TextField.Root>
                         </label>
                         <label>
-                            <Text as="div" size="2" mb="1" weight="bold">
-                                Company
-                            </Text>
-                            <TextField.Root required value={company} onChange={(e) => setCompany(e.target.value)}
-                                placeholder="Enter company name"
-                            />
+                            <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
+                                <Text as="div" size="2" mb="1" weight="bold">
+                                    Company
+                                </Text>
+
+                            </div>
+                            <TextField.Root placeholder='Enter company' required value={company} onChange={(e) => setCompany(e.target.value)}>
+
+                            </TextField.Root>
                         </label>
                         <label>
                             <Text as="div" size="2" mb="1" weight="bold">
@@ -157,12 +203,12 @@ function AddContact() {
 
                 <Flex gap="3" mt="4" justify="end">
                     <Dialog.Close>
-                        <Button variant="soft" color="gray">
+                        <Button onClick={() => cancelAdd()} variant="soft" color="gray">
                             Cancel
                         </Button>
                     </Dialog.Close>
-                    <Dialog.Close>
-                        <Button onClick={contactAddHandle} >Save</Button>
+                    <Dialog.Close disabled={submitDisabled}>
+                        <Button onClick={() => contactAddHandle()} >Save</Button>
                     </Dialog.Close>
                 </Flex>
             </Dialog.Content>

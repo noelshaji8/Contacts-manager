@@ -2,13 +2,15 @@ import React, { useEffect, useState } from 'react';
 import "../utils/styles/homePage.css"
 import '@radix-ui/themes/styles.css';
 import "../utils/styles/contactDisplayCard.css"
-import { Text, TextField, Flex, Theme, Box, Avatar, Card, Button, Select, AlertDialog } from '@radix-ui/themes';
+import { Text, TextField, Flex, Theme, Box, Avatar, Card, Button, Select, AlertDialog, Em } from '@radix-ui/themes';
 import { useSelector, useDispatch } from 'react-redux';
 import { deleteContact, readContacts, updateContact } from '../utils/api';
 import { readContactState, update } from '../redux/contactsSlice';
 import { useNavigate } from "react-router-dom";
 import { useFilePicker } from 'use-file-picker';
 import { FileAmountLimitValidator, FileTypeValidator, FileSizeValidator, ImageDimensionsValidator, } from 'use-file-picker/validators';
+import { validateEmail, validatePhoneNumber, validateUsername, validCheck } from '../utils/inputValidation';
+import { CheckCircledIcon, CrossCircledIcon } from '@radix-ui/react-icons';
 
 function ContactDisplayCard() {
 
@@ -25,6 +27,7 @@ function ContactDisplayCard() {
     const [company, setCompany] = useState(contact.company);
     const [pfp, setPfp] = useState(contact.pfp);
     const [isDisabled, setIsDisabled] = useState(true)
+    const [submitDisabled, setSubmitDisabled] = useState(true)
 
     const { openFilePicker, filesContent, loading, errors } = useFilePicker({
         readAs: 'DataURL',
@@ -42,21 +45,6 @@ function ContactDisplayCard() {
             // }),
         ],
     });
-
-    useEffect(() => {
-        const image = filesContent.map((file, index) => file.content);
-        image[0] && setPfp(image[0])
-    }, [filesContent])
-
-    useEffect(() => {
-        setName(contact.name)
-        setAddress(contact.address)
-        setPhoneNo(contact.phone_no)
-        setAltPhoneNo(contact.alt_phone_no)
-        setEmail(contact.email)
-        setCompany(contact.company)
-        setPfp(contact.pfp)
-    }, [contact])
 
     const contactDeleteHandle = async () => {
         await deleteContact({ _id: contact._id })
@@ -93,6 +81,25 @@ function ContactDisplayCard() {
         dispatch(readContactState(loggedContacts))
         dispatch(update({ title: "Contact Updated" }))
     }
+
+    useEffect(() => {
+        const image = filesContent.map((file, index) => file.content);
+        image[0] && setPfp(image[0])
+    }, [filesContent])
+
+    useEffect(() => {
+        setName(contact.name)
+        setAddress(contact.address)
+        setPhoneNo(contact.phone_no)
+        setAltPhoneNo(contact.alt_phone_no)
+        setEmail(contact.email)
+        setCompany(contact.company)
+        setPfp(contact.pfp)
+    }, [contact])
+
+    useEffect(() => {
+        setSubmitDisabled(!validCheck(name, phoneNo, email, altphoneNo))
+    }, [name, phoneNo, email, altphoneNo])
 
     return (
         <div className='contact-display'>
@@ -151,31 +158,24 @@ function ContactDisplayCard() {
                     <Flex direction="column" gap="3" width="12vw">
                         <label className='textarea' >
                             <Text as="div" size="3" mb="1" weight="bold">
-                                Name
+                                Name <Em>(required)</Em>
                             </Text>
-                            <TextField.Root size="3" value={name} disabled={isDisabled}
-                                placeholder="Enter full name" onChange={(e) => setName(e.target.value)}
-                            />
+                            <TextField.Root size="3" value={name} disabled={isDisabled} placeholder="Enter full name" onChange={(e) => setName(e.target.value)}>
+                                <TextField.Slot side='right'>
+                                    {name === "" || isDisabled ? null : validateUsername(name) ? (<CheckCircledIcon style={{ color: "green" }} />) : <CrossCircledIcon style={{ color: "red" }} />}
+                                </TextField.Slot>
+                            </TextField.Root>
                         </label>
                         <label className='textarea'>
                             <Text as="div" size="3" mb="1" weight="bold">
-                                Phone No.
+                                Phone No. <Em>(required)</Em>
                             </Text>
-                            <TextField.Root size="3" value={phoneNo} disabled={isDisabled}
-                                placeholder="Enter phone number" onChange={(e) => setPhoneNo(e.target.value)}
-                            />
+                            <TextField.Root size="3" value={phoneNo} disabled={isDisabled} placeholder="Enter phone number" onChange={(e) => setPhoneNo(e.target.value)}>
+                                <TextField.Slot side='right'>
+                                    {phoneNo === "" || isDisabled ? null : validatePhoneNumber(phoneNo) ? (<CheckCircledIcon style={{ color: "green" }} />) : <CrossCircledIcon style={{ color: "red" }} />}
+                                </TextField.Slot>
+                            </TextField.Root>
                         </label>
-                        <label className='textarea'>
-                            <Text as="div" size="3" mb="1" weight="bold">
-                                Email
-                            </Text>
-                            <TextField.Root size="3" value={email} disabled={isDisabled}
-                                placeholder="Enter email" onChange={(e) => setEmail(e.target.value)}
-                            />
-                        </label>
-
-                    </Flex>
-                    <Flex direction="column" gap="3" width="12vw">
                         <label className='textarea'>
                             <Text as="div" size="3" mb="1" weight="bold">
                                 Address
@@ -184,13 +184,31 @@ function ContactDisplayCard() {
                                 placeholder="Enter address" onChange={(e) => setAddress(e.target.value)}
                             />
                         </label>
+
+
+                    </Flex>
+                    <Flex direction="column" gap="3" width="12vw">
+                        <label className='textarea'>
+                            <Text as="div" size="3" mb="1" weight="bold">
+                                Email
+                            </Text>
+                            <TextField.Root size="3" value={email} disabled={isDisabled}
+                                placeholder="Enter email" onChange={(e) => setEmail(e.target.value)}
+                            > <TextField.Slot side='right'>
+                                    {email === "" || isDisabled ? null : validateEmail(email) ? (<CheckCircledIcon style={{ color: "green" }} />) : <CrossCircledIcon style={{ color: "red" }} />}
+                                </TextField.Slot>
+                            </TextField.Root>
+                        </label>
                         <label className='textarea'>
                             <Text as="div" size="3" mb="1" weight="bold">
                                 Alt Phone No.
                             </Text>
                             <TextField.Root size="3" value={altphoneNo} disabled={isDisabled}
                                 placeholder="Enter alternate number" onChange={(e) => setAltPhoneNo(e.target.value)}
-                            />
+                            > <TextField.Slot side='right'>
+                                    {altphoneNo === "" || isDisabled ? null : validatePhoneNumber(altphoneNo) ? (<CheckCircledIcon style={{ color: "green" }} />) : <CrossCircledIcon style={{ color: "red" }} />}
+                                </TextField.Slot>
+                            </TextField.Root>
                         </label>
                         <label className='textarea'>
                             <Text as="div" size="3" mb="1" weight="bold">
@@ -220,7 +238,7 @@ function ContactDisplayCard() {
 
                     </Flex>
                 </Flex>
-                <Button disabled={isDisabled} onClick={() => contactUpdateHandle()} id='save-btn' size="3">Save</Button>
+                <Button disabled={submitDisabled || isDisabled} onClick={() => contactUpdateHandle()} id='save-btn' size="3">Save</Button>
             </div>
 
         </div>

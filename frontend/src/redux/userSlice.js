@@ -27,6 +27,7 @@ export const userSlice = createSlice({
     },
     info: (state, action) => {
       state.info = action.payload
+      state.username = action.payload.username
       state.isUpdated = { title: "User Information Updated" }
     }
   }

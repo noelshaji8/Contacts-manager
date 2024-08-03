@@ -2,13 +2,15 @@ import React, { useEffect, useState } from 'react';
 import "../utils/styles/homePage.css"
 import "../utils/styles/contactDisplayCard.css"
 import '@radix-ui/themes/styles.css';
-import { Text, TextField, Flex, Theme, Box, Avatar, Card, Button, Select, AlertDialog, IconButton } from '@radix-ui/themes';
+import { Text, TextField, Flex, Theme, Box, Avatar, Card, Button, Select, AlertDialog, IconButton, Em } from '@radix-ui/themes';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateUserInfo } from '../utils/api';
 import { useNavigate } from "react-router-dom";
 import { info } from '../redux/userSlice';
 import { useFilePicker } from 'use-file-picker';
 import { FileAmountLimitValidator, FileTypeValidator, FileSizeValidator, ImageDimensionsValidator, } from 'use-file-picker/validators';
+import { CheckCircledIcon, CrossCircledIcon } from '@radix-ui/react-icons';
+import { validateEmail, validatePhoneNumber, validateUsername, validCheck } from '../utils/inputValidation';
 
 
 function UserDisplayCard() {
@@ -29,6 +31,7 @@ function UserDisplayCard() {
     const [dob, setDob] = useState(user.info.dob);
     const [pfp, setPfp] = useState(user.info.pfp);
     const [isDisabled, setIsDisabled] = useState(true)
+    const [submitDisabled, setSubmitDisabled] = useState(true)
 
     const { openFilePicker, filesContent, loading, errors } = useFilePicker({
         readAs: 'DataURL',
@@ -47,10 +50,7 @@ function UserDisplayCard() {
         ],
     });
 
-    useEffect(() => {
-        const image = filesContent.map((file, index) => file.content);
-        image[0] && setPfp(image[0])
-    }, [filesContent])
+
 
     const userLogoutHandle = async () => {
         //LOG OUT LOGI
@@ -83,10 +83,21 @@ function UserDisplayCard() {
             dob: dob,
             pfp: pfp
         })
+        console.log(response);
+        
         setIsDisabled(true)
         dispatch(info(response))
 
     }
+
+    useEffect(() => {
+        const image = filesContent.map((file, index) => file.content);
+        image[0] && setPfp(image[0])
+    }, [filesContent])
+
+    useEffect(() => {
+        setSubmitDisabled(!validCheck(name, phoneNo, email, altphoneNo))
+    }, [name, phoneNo, email, altphoneNo])
 
     return (
         <div className='contact-display'>
@@ -145,19 +156,25 @@ function UserDisplayCard() {
                     <Flex direction="column" gap="3" width="12vw">
                         <label className='textarea' >
                             <Text as="div" size="3" mb="1" weight="bold">
-                                Name
+                                Name <Em>(required)</Em>
                             </Text>
                             <TextField.Root size="3" value={name} disabled={isDisabled}
                                 placeholder="Enter full name" onChange={(e) => setName(e.target.value)}
-                            />
+                            ><TextField.Slot side='right'>
+                                    {name === "" || isDisabled ? null : validateUsername(name) ? (<CheckCircledIcon style={{ color: "green" }} />) : <CrossCircledIcon style={{ color: "red" }} />}
+                                </TextField.Slot>
+                            </TextField.Root>
                         </label>
                         <label className='textarea'>
                             <Text as="div" size="3" mb="1" weight="bold">
-                                Phone No.
+                                Phone No. <Em>(required)</Em>
                             </Text>
                             <TextField.Root size="3" value={phoneNo} disabled={isDisabled}
                                 placeholder="Enter phone number" onChange={(e) => setPhoneNo(e.target.value)}
-                            />
+                            ><TextField.Slot side='right'>
+                                    {phoneNo === "" || isDisabled ? null : validatePhoneNumber(phoneNo) ? (<CheckCircledIcon style={{ color: "green" }} />) : <CrossCircledIcon style={{ color: "red" }} />}
+                                </TextField.Slot>
+                            </TextField.Root>
                         </label>
                         <label className='textarea'>
                             <Text as="div" size="3" mb="1" weight="bold">
@@ -186,7 +203,10 @@ function UserDisplayCard() {
                             </Text>
                             <TextField.Root size="3" value={email} disabled={isDisabled}
                                 placeholder="Enter email" onChange={(e) => setEmail(e.target.value)}
-                            />
+                            ><TextField.Slot side='right'>
+                                    {email === "" || isDisabled ? null : validateEmail(email) ? (<CheckCircledIcon style={{ color: "green" }} />) : <CrossCircledIcon style={{ color: "red" }} />}
+                                </TextField.Slot>
+                            </TextField.Root>
                         </label>
                         <label className='textarea'>
                             <Text as="div" size="3" mb="1" weight="bold">
@@ -194,7 +214,10 @@ function UserDisplayCard() {
                             </Text>
                             <TextField.Root size="3" value={altphoneNo} disabled={isDisabled}
                                 placeholder="Enter alternate number" onChange={(e) => setAltPhoneNo(e.target.value)}
-                            />
+                            ><TextField.Slot side='right'>
+                                    {altphoneNo === "" || isDisabled ? null : validatePhoneNumber(altphoneNo) ? (<CheckCircledIcon style={{ color: "green" }} />) : <CrossCircledIcon style={{ color: "red" }} />}
+                                </TextField.Slot>
+                            </TextField.Root>
                         </label>
                         <label className='textarea'>
                             <Text as="div" size="3" mb="1" weight="bold">
@@ -225,7 +248,7 @@ function UserDisplayCard() {
 
                     </Flex>
                 </Flex>
-                <Button disabled={isDisabled} onClick={userUpdateHandle} id='save-btn' size="3">Save</Button>
+                <Button disabled={isDisabled || submitDisabled} onClick={userUpdateHandle} id='save-btn' size="3">Save</Button>
             </div>
 
         </div>

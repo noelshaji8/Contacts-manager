@@ -18,7 +18,8 @@ function LoginForm() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
-    const loginHandle = async () => {
+    const loginHandle = async (e) => {
+        e.preventDefault();
         try {
             const loggedUser = await loginUser({ username: username, password: password })
             dispatch(login(loggedUser))
@@ -31,6 +32,7 @@ function LoginForm() {
         } catch (error) {
             errorMessage.current.style.margin = "2vh 0 -2vh 0";
             errorMessage.current.innerText = error
+            errorMessage.current.style.color = "red"
         }
     }
 
@@ -62,9 +64,9 @@ function LoginForm() {
                             <input required value={password} onChange={(e) => setPassword(e.target.value)} className="Input" type="password" />
                         </Form.Control>
                     </Form.Field>
-                    <div ref={errorMessage} className='error'></div>
+                    <div ref={errorMessage} style={{textAlign:"center"}} className='error'></div>
                     <Form.Submit asChild>
-                        <Button className="Button" onClick={loginHandle} style={{ marginTop: "2vh" }}>
+                        <Button className="Button" onClick={(e)=>loginHandle(e)} style={{ marginTop: "2vh" }}>
                             Login
                         </Button>
                     </Form.Submit>
