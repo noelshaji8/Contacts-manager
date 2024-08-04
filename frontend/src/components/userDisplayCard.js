@@ -4,19 +4,23 @@ import "../utils/styles/contactDisplayCard.css"
 import '@radix-ui/themes/styles.css';
 import { Text, TextField, Flex, Theme, Box, Avatar, Card, Button, Select, AlertDialog, IconButton, Em } from '@radix-ui/themes';
 import { useSelector, useDispatch } from 'react-redux';
-import { updateUserInfo } from '../utils/api';
+import { logoutUser, updateUserInfo } from '../utils/api';
 import { useNavigate } from "react-router-dom";
-import { info } from '../redux/userSlice';
+import { info, logout } from '../redux/userSlice';
 import { useFilePicker } from 'use-file-picker';
 import { FileAmountLimitValidator, FileTypeValidator, FileSizeValidator, ImageDimensionsValidator, } from 'use-file-picker/validators';
 import { CheckCircledIcon, CrossCircledIcon } from '@radix-ui/react-icons';
 import { validateEmail, validatePhoneNumber, validateUsername, validCheck } from '../utils/inputValidation';
+import { createBrowserHistory } from "history";
+import { logoutContacts } from '../redux/contactsSlice';
+import store from '../redux/store';
 
 
 function UserDisplayCard() {
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const history = createBrowserHistory();
 
     const user = useSelector((state) => state.user)
     var recent = new Date().toISOString().split("T")[0];
@@ -51,9 +55,10 @@ function UserDisplayCard() {
     });
 
 
-
     const userLogoutHandle = async () => {
-        //LOG OUT LOGI
+        store.dispatch({type:"RESET"})
+        const response = await logoutUser()        
+        navigate("/")        
     }
 
     const cancelUpdate = () => {

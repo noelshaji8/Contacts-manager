@@ -103,11 +103,12 @@
 
 }
 
-.navbar-btns-grp #navbar-btns[data-state="checked"] {
+/* .navbar-btns-grp #navbar-btns[data-state="checked"] {
     background-color: lightgrey;
     font-weight: 450;
     transition: background-color 0.3s ease;
-}
+} */
+ 
 
 .navbar-profile {
     cursor: pointer;

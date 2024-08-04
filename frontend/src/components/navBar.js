@@ -34,9 +34,9 @@ function NavBar() {
                 <RadioGroup.Item value="edit1" id="edit1" asChild>
                     <Button onClick={handleContactsDisplay} id='navbar-btns' size="3" radius='full' variant="ghost" color='gray'>Contacts</Button>
                 </RadioGroup.Item>
-                <RadioGroup.Item value="edit2" id="edit2" asChild>
+                {/* <RadioGroup.Item value="edit2" id="edit2" asChild>
                     <Button id='navbar-btns' size="3" radius='full' variant="ghost" color='gray'>Groups</Button>
-                </RadioGroup.Item>
+                </RadioGroup.Item> */}
                 <div className='navbar-profile'>
                     <Box >
                         <Card onClick={handleUserContact} size="1" variant='ghost'>

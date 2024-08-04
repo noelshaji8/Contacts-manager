@@ -7,14 +7,21 @@ import { Theme } from '@radix-ui/themes';
 import '@radix-ui/themes/styles.css';
 import { Provider } from "react-redux"
 import store from '../src/redux/store';
+import { PersistGate } from 'redux-persist/integration/react';
+import { persistStore  } from 'redux-persist';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
+let persistor = persistStore(store)
+
 root.render(
   <React.StrictMode>
     <Provider store={store}>
+      <PersistGate persistor={persistor}>
       <Theme>
         <App />
       </Theme>
+      </PersistGate>     
     </Provider>
   </React.StrictMode>
 );

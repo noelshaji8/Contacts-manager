@@ -20,6 +20,15 @@ export const loginUser = async userData => {
     }
 };
 
+export const logoutUser = async () => {
+    try {
+        const response = await axios.get(`${API_URL}/logout`, { withCredentials: true });
+        return response.data;
+    } catch (error) {
+        throw error.response.data;
+    }
+};
+
 export const createContact = async userData => {
     try {
         const response = await axios.post(`${API_URL}/create`, userData, { withCredentials: true });

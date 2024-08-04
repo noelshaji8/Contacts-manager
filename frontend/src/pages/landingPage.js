@@ -1,13 +1,16 @@
 import React, { useEffect, useRef } from 'react';
 import "../utils/styles/landingPage.css"
-import landingPic from "../utils/landingpage.png"
+import landingPic from "../utils/assets/landingpage.png"
 import { Button } from '@radix-ui/themes';
 import { useNavigate, useLocation } from "react-router-dom";
+import { useSelector } from 'react-redux';
 
 function LandingPage() {
 
     const aboutRef = useRef()
     const startRef = useRef()
+
+    const user = useSelector((state) => state.user)
 
     const navigate = useNavigate();
     let location = useLocation();
@@ -19,6 +22,9 @@ function LandingPage() {
     const toSignupPage = () => {
         navigate("/auth/signup")
     }
+
+    useEffect(()=>{console.log(user);
+    },[])
 
     return (
         <div >

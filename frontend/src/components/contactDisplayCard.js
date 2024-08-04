@@ -5,7 +5,7 @@ import "../utils/styles/contactDisplayCard.css"
 import { Text, TextField, Flex, Theme, Box, Avatar, Card, Button, Select, AlertDialog, Em } from '@radix-ui/themes';
 import { useSelector, useDispatch } from 'react-redux';
 import { deleteContact, readContacts, updateContact } from '../utils/api';
-import { readContactState, update } from '../redux/contactsSlice';
+import { readContactState, readSingleContactState, update } from '../redux/contactsSlice';
 import { useNavigate } from "react-router-dom";
 import { useFilePicker } from 'use-file-picker';
 import { FileAmountLimitValidator, FileTypeValidator, FileSizeValidator, ImageDimensionsValidator, } from 'use-file-picker/validators';
@@ -50,7 +50,7 @@ function ContactDisplayCard() {
         await deleteContact({ _id: contact._id })
         const loggedContacts = await readContacts()
         dispatch(readContactState(loggedContacts))
-        navigate(-1)
+        navigate("/home", { replace: true })
         dispatch(update({ title: "Contact Deleted" }))
     }
 
@@ -65,8 +65,9 @@ function ContactDisplayCard() {
         setIsDisabled(true)
     }
 
-    const contactUpdateHandle = async () => {
-        await updateContact({
+    const contactUpdateHandle = async (e) => {
+        
+        const updatedContact = await updateContact({
             _id: contact._id,
             name: name,
             phone_no: phoneNo,
@@ -79,6 +80,7 @@ function ContactDisplayCard() {
         setIsDisabled(true)
         const loggedContacts = await readContacts()
         dispatch(readContactState(loggedContacts))
+        dispatch(readSingleContactState(updatedContact))
         dispatch(update({ title: "Contact Updated" }))
     }
 
@@ -142,7 +144,7 @@ function ContactDisplayCard() {
                                         </Button>
                                     </AlertDialog.Cancel>
                                     <AlertDialog.Action>
-                                        <Button style={{ cursor: "pointer" }} onClick={() => contactDeleteHandle()} variant="solid" color="red">
+                                        <Button style={{ cursor: "pointer" }} onClick={(e) => contactDeleteHandle(e)} variant="solid" color="red">
                                             Delete contact
                                         </Button>
                                     </AlertDialog.Action>
