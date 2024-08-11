@@ -144,7 +144,7 @@ header nav a {
 /* Responsive Styles */
 
 
-@media (max-width: 480px) {
+@media (max-width: 768px) {
 
     #contact {
         margin: "35px 0px 0px 0px"

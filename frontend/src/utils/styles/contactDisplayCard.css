@@ -79,7 +79,7 @@
 
 
 
-@media (max-width: 481px) {
+@media (max-width: 768px) {
     .contact-display {
         display: flex;
         flex-direction: column;
