@@ -4,6 +4,11 @@
     position: relative;
 }
 
+.container h1 {
+    margin: 6vh 0 0 0;
+}
+
+
 /* CARDS */
 
 .contact-list {
@@ -108,7 +113,7 @@
     font-weight: 450;
     transition: background-color 0.3s ease;
 } */
- 
+
 
 .navbar-profile {
     cursor: pointer;
@@ -155,13 +160,11 @@
     position: absolute;
     left: 50%;
     top: 25%;
-    margin: 0 -12.5vw;
+    transform: translate(-50%, 0);
+    /* margin: 0 -12.5vw; */
 
 }
 
-.container h1 {
-    margin: 6vh 0 0 0;
-}
 
 
 .under-searchbar {
@@ -199,7 +202,7 @@
     align-items: center;
     list-style: none;
     padding: 0;
-    margin: 20px 0;
+    margin: 0;
 }
 
 .paginationBttns li {
@@ -250,9 +253,41 @@
     border-color: #0056b3;
 }
 
+
 /* Responsive Design */
 
-@media (max-width: 600px) {
+
+@media (max-width: 481px) {
+
+    .contact-card {
+        width: 40%;
+        height: 100%;
+        padding: 1.5vh 3vw;
+    }
+
+    .contact-info {
+        font-size: 10px;
+    }
+
+    .searchbar {
+        width: 40vw;
+    }
+
+    .under-searchbar {
+
+        padding: 3vh 8vw 4vh;
+    }
+
+    .contact-list {
+
+        gap: 4vw;
+
+    }
+
+    .container h1 {
+        margin: 5vh 0 0 0;
+    }
+
     .paginationBttns a {
         padding: 8px 12px;
     }
@@ -261,25 +296,6 @@
     .nextBttn a {
         padding: 8px 15px;
     }
-}
 
 
-@media (max-width: 768px) {
-    .navbar-btns-grp {
-        flex-direction: row;
-    }
-
-}
-
-
-@media (max-width: 1024px) {
-    .contact-card {
-        width: calc(45% - 2vw);
-    }
-}
-
-@media (max-width: 768px) {
-    .contact-card {
-        width: calc(90% - 2vw);
-    }
 }

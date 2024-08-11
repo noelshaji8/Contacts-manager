@@ -23,11 +23,12 @@ function LandingPage() {
         navigate("/auth/signup")
     }
 
-    useEffect(()=>{console.log(user);
-    },[])
+    useEffect(() => {
+        console.log(user);
+    }, [])
 
     return (
-        <div >
+        <div ref={startRef} className='main' >
             <div className="header-container">
                 <h1>Contacts</h1>
                 <nav>
@@ -36,7 +37,8 @@ function LandingPage() {
                 </nav>
             </div>
 
-            <section ref={startRef} className="hero">
+            <section className="hero">
+
                 <div className="hero-content">
                     <h2>Expand your circle and keep them tighter!</h2>
                     <div className="auth-header">
@@ -58,11 +60,11 @@ function LandingPage() {
                     <div style={{ display: "flex", gap: "10vw" }}>
                         <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignContent: "center" }}>
                             <h2>Our Vision</h2>
-                            <p style={{ textAlign: "justify", textAlignLast: "center", textJustify: "inter-word" }}>At ContactEase, we envision a world where managing contacts is seamless, intuitive, and efficient. We aim to empower individuals and businesses to maintain meaningful relationships through innovative technology and user-friendly features.</p>
+                            <p style={{ textAlign: "left", textAlignLast: "left", textJustify: "inter-character" }}>At ContactEase, we envision a world where managing contacts is seamless, intuitive, and efficient. We aim to empower individuals and businesses to maintain meaningful relationships through innovative technology and user-friendly features.</p>
                         </div>
                         <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignContent: "center" }}>
                             <h2>Our Mission</h2>
-                            <p style={{ textAlign: "justify", textAlignLast: "center", textJustify: "inter-word" }}>Our mission is to provide a robust contacts management application that caters to your needs, whether you're an individual user, a small business, or a large corporation. We strive to offer a platform that combines simplicity, functionality, and security.</p>
+                            <p style={{ textAlign: "left", textAlignLast: "left", textJustify: "inter-character" }}>Our mission is to provide a robust contacts management application that caters to your needs, whether you're an individual user, a small business, or a large corporation. We strive to offer a platform that combines simplicity, functionality, and security.</p>
                         </div>
                     </div>
                     <div ></div>
@@ -74,7 +76,7 @@ function LandingPage() {
                         <li><strong>Customizable Tags and Groups</strong></li>
                     </ul>
 
-                    <h2 style={{ margin: "8vh 0 0 0" }}>Contact</h2>
+                    <h2 id='contact' >Contact</h2>
                     <p>Have questions or need assistance? Our support team is here to help! Reach out to us at <a href="mailto:noelshaji2002@gmail.com">noelshaji2002@gmail.com</a> or visit our Help Center for more information.</p>
                 </div>
             </section>

@@ -58,7 +58,7 @@ function SearchBar() {
                 </div>
             ) : searchTerm && (
                 <div className='results-list'>
-                    <div style={{ padding: "25px" }}>
+                    <div style={{ padding: "25px 0",overflowWrap:"break-word" }}>
                         No contacts found
                     </div>
                 </div>

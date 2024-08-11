@@ -14,9 +14,12 @@ import { validateEmail, validatePhoneNumber, validateUsername, validCheck } from
 import { createBrowserHistory } from "history";
 import { logoutContacts } from '../redux/contactsSlice';
 import store from '../redux/store';
+import { useMediaQuery } from "react-responsive";
 
 
 function UserDisplayCard() {
+
+    const isMobile = useMediaQuery({ maxWidth: 768 });
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -56,9 +59,9 @@ function UserDisplayCard() {
 
 
     const userLogoutHandle = async () => {
-        store.dispatch({type:"RESET"})
-        const response = await logoutUser()        
-        navigate("/")        
+        store.dispatch({ type: "RESET" })
+        const response = await logoutUser()
+        navigate("/")
     }
 
     const cancelUpdate = () => {
@@ -89,7 +92,7 @@ function UserDisplayCard() {
             pfp: pfp
         })
         console.log(response);
-        
+
         setIsDisabled(true)
         dispatch(info(response))
 
@@ -103,67 +106,68 @@ function UserDisplayCard() {
     useEffect(() => {
         setSubmitDisabled(!validCheck(name, phoneNo, email, altphoneNo))
     }, [name, phoneNo, email, altphoneNo])
+ 
 
     return (
         <div className='contact-display'>
-            <div className='left'>
-                <div className='contact-title'>
 
-                    <Card size="3" variant='ghost' style={{ margin: "0" }}>
-                        <Flex gap="6" align="center" direction="row">
-                            <Avatar src={pfp} size="7" radius="medium" fallback={user.username[0]} color="indigo" />
-                            <Box>
-                                <Text as="div" size="7" weight="bold">
-                                    {user.username}
-                                </Text>
-                            </Box>
-                        </Flex>
-                    </Card>
-                    <Button onClick={() => openFilePicker()} disabled={isDisabled} size="1" variant='soft'>Edit profile picture</Button>
+            <div className='contact-title'>
 
-                </div>
-                <div className='options'>
-                    <h2>Options</h2>
-                    <Flex gap="3" justify="center">
-
-                        <Button onClick={() => isDisabled ? setIsDisabled(false) : cancelUpdate()} size="3" style={{ cursor: "pointer" }}>{isDisabled ? "Update" : "Cancel"}</Button>
-
-                        <AlertDialog.Root>
-                            <AlertDialog.Trigger>
-                                <Button size="3" color="indigo" style={{ cursor: "pointer" }}>Log out</Button>
-                            </AlertDialog.Trigger>
-                            <AlertDialog.Content maxWidth="450px">
-                                <AlertDialog.Title>Log out</AlertDialog.Title>
-                                <AlertDialog.Description size="2">
-                                    Are you sure that you want to log out?
-                                </AlertDialog.Description>
-
-                                <Flex gap="3" mt="4" justify="end">
-                                    <AlertDialog.Cancel>
-                                        <Button style={{ cursor: "pointer" }} variant="soft" color="gray">
-                                            Cancel
-                                        </Button>
-                                    </AlertDialog.Cancel>
-                                    <AlertDialog.Action>
-                                        <Button style={{ cursor: "pointer" }} onClick={() => userLogoutHandle()} variant="solid" color="red">
-                                            Log out
-                                        </Button>
-                                    </AlertDialog.Action>
-                                </Flex>
-                            </AlertDialog.Content>
-                        </AlertDialog.Root>
+                <Card size="3" variant='ghost' style={{ margin: "0" }}>
+                    <Flex gap="6" align="center" direction="row">
+                        <Avatar src={pfp} size="7" radius="medium" fallback={user.username[0]} color="indigo" />
+                        <Box>
+                            <Text as="div" size="7" weight="bold">
+                                {user.username}
+                            </Text>
+                        </Box>
                     </Flex>
-                </div>
+                </Card>
+                <Button onClick={() => openFilePicker()} disabled={isDisabled} size="1" variant='soft'>Edit profile picture</Button>
+
+            </div>
+            <div className='options'>
+                <h2>Options</h2>
+                <Flex gap="3" justify="center">
+
+                    <Button onClick={() => isDisabled ? setIsDisabled(false) : cancelUpdate()} size="3" style={{ cursor: "pointer" }}>{isDisabled ? "Update" : "Cancel"}</Button>
+
+                    <AlertDialog.Root>
+                        <AlertDialog.Trigger>
+                            <Button size="3" color="indigo" style={{ cursor: "pointer" }}>Log out</Button>
+                        </AlertDialog.Trigger>
+                        <AlertDialog.Content maxWidth="450px">
+                            <AlertDialog.Title>Log out</AlertDialog.Title>
+                            <AlertDialog.Description size="2">
+                                Are you sure that you want to log out?
+                            </AlertDialog.Description>
+
+                            <Flex gap="3" mt="4" justify="end">
+                                <AlertDialog.Cancel>
+                                    <Button style={{ cursor: "pointer" }} variant="soft" color="gray">
+                                        Cancel
+                                    </Button>
+                                </AlertDialog.Cancel>
+                                <AlertDialog.Action>
+                                    <Button style={{ cursor: "pointer" }} onClick={() => userLogoutHandle()} variant="solid" color="red">
+                                        Log out
+                                    </Button>
+                                </AlertDialog.Action>
+                            </Flex>
+                        </AlertDialog.Content>
+                    </AlertDialog.Root>
+                </Flex>
             </div>
 
-            <div className='contact-details'>
-                <Flex direction="row" justify="center" gap="6" style={{ scale: "1.2", marginBottom: "4vh" }}>
-                    <Flex direction="column" gap="3" width="12vw">
+
+            <div className='user-contact-details'>
+                <Flex className='user-details-flex' direction={isMobile ? "column" : "row"} justify="center" gap={isMobile ? "3" : "6"}>
+                    <Flex direction="column" gap="3" width={isMobile ? "50vw" : "12vw"}>
                         <label className='textarea' >
                             <Text as="div" size="3" mb="1" weight="bold">
                                 Name <Em>(required)</Em>
                             </Text>
-                            <TextField.Root size="3" value={name} disabled={isDisabled}
+                            <TextField.Root size="3" className='textfield' value={name} disabled={isDisabled}
                                 placeholder="Enter full name" onChange={(e) => setName(e.target.value)}
                             ><TextField.Slot side='right'>
                                     {name === "" || isDisabled ? null : validateUsername(name) ? (<CheckCircledIcon style={{ color: "green" }} />) : <CrossCircledIcon style={{ color: "red" }} />}
@@ -174,7 +178,7 @@ function UserDisplayCard() {
                             <Text as="div" size="3" mb="1" weight="bold">
                                 Phone No. <Em>(required)</Em>
                             </Text>
-                            <TextField.Root size="3" value={phoneNo} disabled={isDisabled}
+                            <TextField.Root size="3" className='textfield'  value={phoneNo} disabled={isDisabled}
                                 placeholder="Enter phone number" onChange={(e) => setPhoneNo(e.target.value)}
                             ><TextField.Slot side='right'>
                                     {phoneNo === "" || isDisabled ? null : validatePhoneNumber(phoneNo) ? (<CheckCircledIcon style={{ color: "green" }} />) : <CrossCircledIcon style={{ color: "red" }} />}
@@ -185,7 +189,7 @@ function UserDisplayCard() {
                             <Text as="div" size="3" mb="1" weight="bold">
                                 Address
                             </Text>
-                            <TextField.Root size="3" value={address} disabled={isDisabled}
+                            <TextField.Root size="3" className='textfield'  value={address} disabled={isDisabled}
                                 placeholder="Enter address" onChange={(e) => setAddress(e.target.value)}
                             />
                         </label>
@@ -194,19 +198,19 @@ function UserDisplayCard() {
                             <Text as="div" size="3" mb="1" weight="bold">
                                 Company
                             </Text>
-                            <TextField.Root size="3" value={company} disabled={isDisabled}
+                            <TextField.Root size="3" className='textfield'  value={company} disabled={isDisabled}
                                 placeholder="Enter company" onChange={(e) => setCompany(e.target.value)}
                             />
                         </label>
 
 
                     </Flex>
-                    <Flex direction="column" gap="3" width="12vw">
+                    <Flex direction="column" gap="3" width={isMobile ? "50vw" : "12vw"}>
                         <label className='textarea'>
                             <Text as="div" size="3" mb="1" weight="bold">
                                 Email
                             </Text>
-                            <TextField.Root size="3" value={email} disabled={isDisabled}
+                            <TextField.Root size="3" className='textfield'  value={email} disabled={isDisabled}
                                 placeholder="Enter email" onChange={(e) => setEmail(e.target.value)}
                             ><TextField.Slot side='right'>
                                     {email === "" || isDisabled ? null : validateEmail(email) ? (<CheckCircledIcon style={{ color: "green" }} />) : <CrossCircledIcon style={{ color: "red" }} />}
@@ -217,7 +221,7 @@ function UserDisplayCard() {
                             <Text as="div" size="3" mb="1" weight="bold">
                                 Alt Phone No.
                             </Text>
-                            <TextField.Root size="3" value={altphoneNo} disabled={isDisabled}
+                            <TextField.Root size="3" className='textfield'  value={altphoneNo} disabled={isDisabled}
                                 placeholder="Enter alternate number" onChange={(e) => setAltPhoneNo(e.target.value)}
                             ><TextField.Slot side='right'>
                                     {altphoneNo === "" || isDisabled ? null : validatePhoneNumber(altphoneNo) ? (<CheckCircledIcon style={{ color: "green" }} />) : <CrossCircledIcon style={{ color: "red" }} />}
@@ -228,7 +232,7 @@ function UserDisplayCard() {
                             <Text as="div" size="3" mb="1" weight="bold">
                                 Date of Birth
                             </Text>
-                            <TextField.Root type='date' max={recent} size="3" value={dob} disabled={isDisabled}
+                            <TextField.Root className='textfield' type='date' max={recent} size="3" value={dob} disabled={isDisabled}
                                 placeholder="Enter date of birth" onChange={(e) => setDob(e.target.value)}
                             />
                         </label>
@@ -253,7 +257,7 @@ function UserDisplayCard() {
 
                     </Flex>
                 </Flex>
-                <Button disabled={isDisabled || submitDisabled} onClick={userUpdateHandle} id='save-btn' size="3">Save</Button>
+                <Button disabled={isDisabled || submitDisabled} onClick={userUpdateHandle} className='user-save-btn' size="3">Save</Button>
             </div>
 
         </div>

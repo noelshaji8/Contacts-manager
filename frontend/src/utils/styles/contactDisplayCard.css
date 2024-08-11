@@ -1,6 +1,9 @@
 .contact-display {
+    height: 55vh;
+    width: 65vw;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    flex-wrap: wrap;
     gap: 5vh;
     position: absolute;
     left: 50%;
@@ -31,27 +34,40 @@
     background-color: lightgrey;
     width: 20vw;
     height: 25vh;
+
 }
 
 .options h2 {
-    margin-bottom: 5vh;
+    margin: 4vh 0;
 }
 
-.contact-details {
+.contact-details, .user-contact-details {
     border-radius: 10px;
     background-color: lightgrey;
-    width: 45vw;
+    width: 42.5vw;
     height: 55vh;
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
 }
 
-.contact-details #save-btn {
+.contact-details #save-btn, .user-save-btn {
     position: absolute;
     bottom: 0;
     right: 0;
-    margin: 2.5vh;cursor: pointer;
+    margin: 2vh;
+    cursor: pointer;
+}
+
+.details-flex {
+    scale: 1.4;
+    margin-bottom: 4vh;
+}
+
+.user-details-flex {
+    scale: 1.2;
+    margin-bottom: 4vh;
 }
 
 .textarea {
@@ -61,35 +77,98 @@
     align-items: start;
 }
 
-/* GROUP DISPLAY */
 
 
+@media (max-width: 481px) {
+    .contact-display {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: nowrap;
+        gap: 3vh;
+        position: static;
+        left: auto;
+        top: auto;
+        transform: none;
+        margin: 0 auto;
+        width: 80vw;
+        height: auto;
+        width: auto;
+    }
 
-.group-details {
-    border-radius: 10px;
-    background-color: lightgrey;
-    width: 45vw;
-    height: 55vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
-    align-items: start;
-    box-sizing: border-box;
-    padding: 3vh 3vw;
-}
+    .contact-title {
+        width: 80vw;
+        height: 20vh;
+        order: 1;
+        margin: 3vh 0 0 0 ;
+    }
 
-.group-details #save-btn {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    margin: 2.5vh;
-}
+    .options {
+        width: 80vw;
+        order: 3;
+        display: flex;
+        flex-direction: column;
+        height: 15vh;
+        margin: 0 0 3vh 0;
+    }
 
-.group-textarea {
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
-    align-items: start;
-    width: 100%;
-    margin-bottom: 5vh;
+    .contact-details {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 80vw;
+        height: 85vh;
+        order: 2;
+    }
+
+    .options h2 {
+        margin: 2vh 0;
+    }
+
+    .contact-details #save-btn {
+        position: static;
+        bottom: auto;
+        right: auto;
+        cursor: pointer;
+    }
+
+    .details-flex {
+        scale: 1.4;
+        margin:auto 0;
+    }
+
+    /* USER */
+
+    .user-contact-details {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 80vw;
+        height: 100vh;
+        order: 2;
+    }
+
+    .options h2 {
+        margin: 2vh 0;
+    }
+
+    .user-contact-details #user-save-btn {
+        position: static;
+        bottom: auto;
+        right: 0;
+        cursor: pointer;
+    }
+
+    .user-details-flex {
+        scale: 1.4;
+        margin:auto 0;
+    }
+
+    .textfield{
+        width: 100%;
+    }
+
 }

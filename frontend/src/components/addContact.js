@@ -9,9 +9,11 @@ import { CheckCircledIcon, CheckIcon, CrossCircledIcon, PersonIcon } from '@radi
 import { useFilePicker } from 'use-file-picker';
 import { FileAmountLimitValidator, FileTypeValidator, FileSizeValidator, ImageDimensionsValidator, } from 'use-file-picker/validators';
 import { validateEmail, validatePhoneNumber, validateUsername, validCheck } from '../utils/inputValidation';
-
+import { useMediaQuery } from "react-responsive";
 
 function AddContact() {
+
+    const isMobile = useMediaQuery({ maxWidth: 768 });
 
     const dispatch = useDispatch()
 
@@ -100,7 +102,7 @@ function AddContact() {
                     Enter the contact details
                 </Dialog.Description>
                 <Flex direction="row" justify="between">
-                    <Flex direction="column" gap="3" width="12vw">
+                    <Flex direction="column" gap="3" width={isMobile ? "38vw" : "12vw"}>
 
                         <label>
                             <Text as="div" size="2" mb="1" weight="bold">
@@ -144,7 +146,7 @@ function AddContact() {
                         </label>
 
                     </Flex>
-                    <Flex direction="column" gap="3" width="12vw">
+                    <Flex direction="column" gap="3" width={isMobile ? "38vw" : "12vw"}>
                         <label>
                             <Text as="div" size="2" mb="1" weight="bold">
                                 Email
@@ -170,17 +172,15 @@ function AddContact() {
                             </TextField.Root>
                         </label>
                         <label>
-                            <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
-                                <Text as="div" size="2" mb="1" weight="bold">
-                                    Company
-                                </Text>
 
-                            </div>
+                            <Text as="div" size="2" mb="1" weight="bold">
+                                Company
+                            </Text>
                             <TextField.Root placeholder='Enter company' required value={company} onChange={(e) => setCompany(e.target.value)}>
-
                             </TextField.Root>
+
                         </label>
-                        <label>
+                        {/* <label>
                             <Text as="div" size="2" mb="1" weight="bold">
                                 Group
                             </Text>
@@ -195,7 +195,7 @@ function AddContact() {
                                     </Select.Group>
                                 </Select.Content>
                             </Select.Root>
-                        </label>
+                        </label> */}
 
                     </Flex>
                 </Flex>

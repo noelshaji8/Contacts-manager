@@ -12,7 +12,7 @@ function App() {
   const user = useSelector((state) => state.user);
 
   const LoginRouteProtection = () => {
-    return user.isLoggedIn ? <Outlet /> : <Navigate to="/auth/login" />
+    return user.isLoggedIn ? <Outlet /> : <Navigate to="/" />
   }
 
   const LogoutRouteProtection = () => {
@@ -24,8 +24,8 @@ function App() {
       <div className="App">
         <NotifyToast />
         <Routes>
-          <Route index element={<LandingPage />}></Route>
           <Route element={<LogoutRouteProtection />}>
+            <Route index element={<LandingPage />}></Route>
             <Route path='/auth/*' element={<AuthPage />}></Route>
           </Route>
           <Route element={<LoginRouteProtection />}>
