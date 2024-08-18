@@ -10,27 +10,35 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
 import ReactPaginate from 'react-paginate';
 import UserDisplayCard from '../components/userDisplayCard';
-import { readContacts } from '../utils/api';
-import { readContactState } from '../redux/contactsSlice';
+
 
 function HomePage() {
 
-    const dispatch = useDispatch()
+    // Obtains the list of contacts from the Redux store
     const contacts = useSelector((state) => state.contacts.contacts)
 
+    // State variable to keep track of the current page number
     const [pgNo, setPgNo] = useState(0)
 
+    // Constant to determine how many contacts should be displayed on each page
     const contactsPerPage = 8
+
+    // Calculates the starting index of the contacts to be displayed on the current page
     const pagesVisited = pgNo * contactsPerPage
+
+    // Calculates the total number of pages needed to display all the contacts
     const pageCount = Math.ceil(contacts.length / contactsPerPage)
 
-    console.log(contacts);
-
+    // Conditional rendering of the contacts
+    // If there are contacts, it slices the contacts array based on the pagesVisited and contactsPerPage variables
+    // and maps over the sliced array to render each contact as a ContactCard component
+    // If there are no contacts, it displays a message asking the user to add some contacts
     const displayContacts = contacts.length > 0 ? contacts
         .slice(pagesVisited, pagesVisited + contactsPerPage)
         .map((contact, i) => (<ContactCard key={i} contact={contact} />))
         : (<h2 style={{ margin: "15vh 0 " }}>Add some contacts</h2>)
 
+    // Function to update the pgNo state variable with the selected page number
     const pageChangeHandle = ({ selected }) => { setPgNo(selected) }
 
     return (
@@ -75,3 +83,4 @@ function HomePage() {
 }
 
 export default HomePage;
+

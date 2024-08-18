@@ -6,6 +6,13 @@ import { readContactState, readSingleContactState } from '../redux/contactsSlice
 import { useNavigate} from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 
+/**
+ * A React component that displays a contact card with the contact's profile picture and name.
+ * When clicked, it navigates to the contact's details page and updates the single contact state.
+ *
+ * @param {Object} contact - The contact object containing the profile picture and name.
+ * @return {JSX.Element} The contact card JSX element.
+ */
 function ContactCard({ contact }) {
 
     const dispatch = useDispatch();

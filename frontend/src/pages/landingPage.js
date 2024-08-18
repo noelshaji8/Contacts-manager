@@ -5,27 +5,26 @@ import { Button } from '@radix-ui/themes';
 import { useNavigate, useLocation } from "react-router-dom";
 import { useSelector } from 'react-redux';
 
-function LandingPage() {
 
+function LandingPage() {
+    
     const aboutRef = useRef()
     const startRef = useRef()
-
-    const user = useSelector((state) => state.user)
-
     const navigate = useNavigate();
     let location = useLocation();
+
+    // Get the current user state
+    const user = useSelector((state) => state.user)
     let { pathname } = location;
 
+    
     const toLoginPage = () => {
         navigate("/auth/login")
     }
+
     const toSignupPage = () => {
         navigate("/auth/signup")
     }
-
-    useEffect(() => {
-        console.log(user);
-    }, [])
 
     return (
         <div ref={startRef} className='main' >
@@ -38,7 +37,6 @@ function LandingPage() {
             </div>
 
             <section className="hero">
-
                 <div className="hero-content">
                     <h2>Expand your circle and keep them tighter!</h2>
                     <div className="auth-header">

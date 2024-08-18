@@ -6,7 +6,7 @@ const initialState = {
     isUpdated:{}
 };
 
-export const contactsSlice = createSlice({
+export const contactsSlice = createSlice({ 
     name: 'contacts',
     initialState,
     reducers: {

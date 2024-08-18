@@ -11,6 +11,14 @@ import { FileAmountLimitValidator, FileTypeValidator, FileSizeValidator, ImageDi
 import { validateEmail, validatePhoneNumber, validateUsername, validCheck } from '../utils/inputValidation';
 import { useMediaQuery } from "react-responsive";
 
+/**
+ * A React functional component for adding a new contact.
+ * 
+ * This component handles user input for contact details, 
+ * validates the input, and saves the contact to the database.
+ * 
+ * @return {JSX.Element} The JSX element representing the add contact form.
+ */
 function AddContact() {
 
     const isMobile = useMediaQuery({ maxWidth: 768 });
@@ -26,28 +34,23 @@ function AddContact() {
     const [pfp, setPfp] = useState("");
     const [submitDisabled, setSubmitDisabled] = useState(true)
 
+    // Initialize useFilePicker hook with options for file picker
     const { openFilePicker, filesContent, loading, errors } = useFilePicker({
-        readAs: 'DataURL',
-        accept: 'image/*',
-        multiple: true,
+        readAs: 'DataURL', // read file as DataURL
+        accept: 'image/*',  // accept only image files
+        multiple: true, // allow multiple file selection
         validators: [
-            new FileAmountLimitValidator({ max: 1 }),
-            new FileTypeValidator(['jpg', 'jpeg', 'png']),
-            new FileSizeValidator({ maxFileSize: 5 * 1024 * 1024 }),
-            // new ImageDimensionsValidator({
-            //     maxHeight: 900, // in pixels
-            //     maxWidth: 1600,
-            //     minHeight: 600,
-            //     minWidth: 768,
-            // }),
+            new FileAmountLimitValidator({ max: 1 }), // limit number of files to 1
+            new FileTypeValidator(['jpg', 'jpeg', 'png']), // limit file types to jpg, jpeg and png
+            new FileSizeValidator({ maxFileSize: 5 * 1024 * 1024 }), // limit file size to 5MB
         ],
     });
 
 
-
+    // Function to handle adding a new contact
     const contactAddHandle = async () => {
-
         try {
+            // Call createContact function with contact details
             await createContact({
                 name: name,
                 phone_no: phoneNo,
@@ -57,8 +60,12 @@ function AddContact() {
                 company: company,
                 pfp: pfp
             })
+
+            // Read contacts from database and update Redux store
             const loggedContacts = await readContacts()
             dispatch(readContactState(loggedContacts))
+            
+            // Dispatch update action with success message
             dispatch(update({ title: "Contact Added" }))
 
 
@@ -68,6 +75,7 @@ function AddContact() {
 
     }
 
+    // Function to clear input fields and reset file picker
     const cancelAdd = () => {
         setName("")
         setAddress("")
@@ -78,12 +86,14 @@ function AddContact() {
         setPfp()
     }
 
+    // Update pfp state when filesContent changes
     useEffect(() => {
         const image = filesContent.map((file, index) => file.content);
         image[0] && setPfp(image[0])
     }, [filesContent])
 
 
+    // Disable submit button if any input field is invalid
     useEffect(() => {
         setSubmitDisabled(!validCheck(name, phoneNo, email, altphoneNo))
     }, [name, phoneNo, altphoneNo, email])
@@ -180,22 +190,6 @@ function AddContact() {
                             </TextField.Root>
 
                         </label>
-                        {/* <label>
-                            <Text as="div" size="2" mb="1" weight="bold">
-                                Group
-                            </Text>
-
-                            <Select.Root>
-                                <Select.Trigger placeholder='Select' />
-                                <Select.Content>
-                                    <Select.Group>
-                                        <Select.Item value="Group1">Group1</Select.Item>
-                                        <Select.Item value="Group2">Group2</Select.Item>
-                                        <Select.Item value="Group3">Group3</Select.Item>
-                                    </Select.Group>
-                                </Select.Content>
-                            </Select.Root>
-                        </label> */}
 
                     </Flex>
                 </Flex>

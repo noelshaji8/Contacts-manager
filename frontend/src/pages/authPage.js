@@ -5,6 +5,7 @@ import LoginForm from '../components/loginForm';
 import SignUpForm from '../components/signupForm';
 import { Route, Routes } from "react-router-dom";
 
+
 function AuthPage() {
     return (
         <div className="container">

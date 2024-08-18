@@ -1,6 +1,10 @@
 const Contact = require("../models/contacts")
 const User = require("../models/user");
 
+
+/**
+ * This function creates a new contact and saves it to the database.
+ */
 const createContact = (req, res) => {
     const contact = new Contact({
         uid: req.user.uid,
@@ -17,6 +21,9 @@ const createContact = (req, res) => {
         .catch((error) => { res.status(400).send(error) })
 }
 
+/**
+ * This function retrieves all contacts associated with the user.
+ */
 const readContacts = (req, res) => {
     Contact.find({
         uid: { $eq: req.user.uid }
@@ -29,18 +36,9 @@ const readContacts = (req, res) => {
         })
 }
 
-const searchContact = (req, res) => {
-    Contact.find({
-        name: { $eq: req.body.name }
-    })
-        .then((result) => {
-            res.send(result)
-        })
-        .catch((err) => {
-            res.send(err)
-        })
-}
-
+/**
+ * This function updates a contact in the database.
+ */
 const updateContact = (req, res) => {
 
     Contact.findOneAndUpdate({ _id: req.body._id, uid: req.user.uid }, req.body, { new: true })
@@ -52,6 +50,9 @@ const updateContact = (req, res) => {
         })
 }
 
+/**
+ * This function deletes a contact from the database.
+ */
 const deleteContact = (req, res) => {
 
     Contact.deleteOne({ _id: req.body._id, uid: req.user.uid })
@@ -63,6 +64,9 @@ const deleteContact = (req, res) => {
         })
 }
 
+/**
+ * This function updates user information in the database.
+ */
 const updateUserInfo = (req, res) => {
     User.findOneAndUpdate({ _id: req.body._id, uid: req.user.uid }, req.body, { new: true })
     .then((result) => {
@@ -76,7 +80,6 @@ const updateUserInfo = (req, res) => {
 module.exports = {
     createContact,
     readContacts,
-    searchContact,
     updateContact,
     deleteContact,
     updateUserInfo

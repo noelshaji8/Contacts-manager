@@ -11,15 +11,22 @@ function authenticateToken(req, res, next) {
         return res.status(400).send("no token")
     }
     try {
+
+        // Verify the token using the access secret
         jwt.verify(token, accessSecret, (err, user) => {
-            if (err) { return res.status(403).send("Token invalid. Please login with proper credentials") }
+            if (err) {
+
+                // If the token is invalid, return a 403 status with a message
+                return res.status(403).send("Token invalid. Please login with proper credentials")
+            }
+            
+            // Add the user object to the request
             req.user = user
         })
         next()
     } catch (err) {
         res.clearCookie("token")
     }
-
 
 }
 

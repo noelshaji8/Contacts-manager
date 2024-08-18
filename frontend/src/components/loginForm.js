@@ -9,6 +9,16 @@ import { useSelector, useDispatch } from 'react-redux';
 import { login } from '../redux/userSlice';
 import { readContactState } from '../redux/contactsSlice';
 
+/**
+ * A React functional component that handles user login.
+ * 
+ * This component renders a login form with input fields for username and password.
+ * It uses the `loginUser` function to authenticate the user and dispatches the 
+ * `login` action to update the user state. If the login is successful, it navigates 
+ * to the home page and fetches the user's contacts.
+ * 
+ * @return {JSX.Element} The JSX element representing the login form.
+ */
 function LoginForm() {
 
     const dispatch = useDispatch();
@@ -22,25 +32,30 @@ function LoginForm() {
 
     const loginHandle = async (e) => {
         e.preventDefault();
+
         try {
+            
+            //Call the loginUser function with the input values
             const loggedUser = await loginUser({ username: username, password: password })
             dispatch(login(loggedUser))
+
+            //Clear the error message
             errorMessage.current.style.margin = "0";
             errorMessage.current.innerText = ""
+
+            //Get the logged in user contacts
             const loggedContacts = await readContacts()
             dispatch(readContactState(loggedContacts))
             navigate("/home")
 
         } catch (error) {
+
+            //If there is an error, display the error message and change the text color to red
             errorMessage.current.style.margin = "2vh 0 -2vh 0";
             errorMessage.current.innerText = error
             errorMessage.current.style.color = "red"
         }
     }
-
-    useEffect(() => {
-        console.log(user);
-    }, [])
 
     return (
         <div className='container'>

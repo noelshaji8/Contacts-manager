@@ -11,6 +11,13 @@ import { readContacts } from '../utils/api';
 import { PersonIcon } from '@radix-ui/react-icons';
 import { useMediaQuery } from "react-responsive";
 
+/**
+ * A navigation bar component that handles user contact and contact display.
+ * 
+ * It uses media queries to adapt to different screen sizes and provides a responsive design.
+ * 
+ * @return {JSX.Element} The JSX element representing the navigation bar
+ */
 function NavBar() {
 
     const isMobile = useMediaQuery({ maxWidth: 768 });

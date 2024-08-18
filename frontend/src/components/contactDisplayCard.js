@@ -13,6 +13,11 @@ import { validateEmail, validatePhoneNumber, validateUsername, validCheck } from
 import { CheckCircledIcon, CrossCircledIcon } from '@radix-ui/react-icons';
 import { useMediaQuery } from "react-responsive";
 
+/**
+ * A functional component that displays a contact's information and allows for editing and deletion.
+ * 
+ * @return {JSX.Element} The JSX element representing the contact display card.
+ */
 function ContactDisplayCard() {
 
     const isMobile = useMediaQuery({ maxWidth: 768 });
@@ -32,31 +37,30 @@ function ContactDisplayCard() {
     const [isDisabled, setIsDisabled] = useState(true)
     const [submitDisabled, setSubmitDisabled] = useState(true)
 
+    // Hook to open file picker for updating profile picture
     const { openFilePicker, filesContent, loading, errors } = useFilePicker({
         readAs: 'DataURL',
         accept: 'image/*',
         multiple: true,
         validators: [
-            new FileAmountLimitValidator({ max: 1 }),
-            new FileTypeValidator(['jpg', 'jpeg', 'png']),
-            new FileSizeValidator({ maxFileSize: 5 * 1024 * 1024 }),
-            // new ImageDimensionsValidator({
-            //     maxHeight: 900, // in pixels
-            //     maxWidth: 1600,
-            //     minHeight: 600,
-            //     minWidth: 768,
-            // }),
+            new FileAmountLimitValidator({ max: 1 }), // limit to 1 file
+            new FileTypeValidator(['jpg', 'jpeg', 'png']), // accept only image files
+            new FileSizeValidator({ maxFileSize: 5 * 1024 * 1024 }), // limit file size to 5MB
         ],
     });
 
+    // Function to delete contact
     const contactDeleteHandle = async () => {
         await deleteContact({ _id: contact._id })
+
+        // Read contacts from database and update Redux store
         const loggedContacts = await readContacts()
         dispatch(readContactState(loggedContacts))
         navigate("/home", { replace: true })
         dispatch(update({ title: "Contact Deleted" }))
     }
 
+    // Function to cancel contact update and reset input fields
     const cancelUpdate = () => {
         setName(contact.name)
         setAddress(contact.address)
@@ -68,8 +72,10 @@ function ContactDisplayCard() {
         setIsDisabled(true)
     }
 
+    // Function to update contact
     const contactUpdateHandle = async (e) => {
 
+        // Call updateContact function with contact details
         const updatedContact = await updateContact({
             _id: contact._id,
             name: name,
@@ -80,19 +86,23 @@ function ContactDisplayCard() {
             company: company,
             pfp: pfp
         })
+        // Disable input fields
         setIsDisabled(true)
+
+        // Read contacts from database and update Redux store
         const loggedContacts = await readContacts()
         dispatch(readContactState(loggedContacts))
         dispatch(readSingleContactState(updatedContact))
         dispatch(update({ title: "Contact Updated" }))
     }
 
-
+    // Update contact's profile picture when file picker is used
     useEffect(() => {
         const image = filesContent.map((file, index) => file.content);
         image[0] && setPfp(image[0])
     }, [filesContent])
 
+    // Reset input fields when contact is changed
     useEffect(() => {
         setName(contact.name)
         setAddress(contact.address)
@@ -103,6 +113,7 @@ function ContactDisplayCard() {
         setPfp(contact.pfp)
     }, [contact])
 
+    // Disable submit button if input validation fails
     useEffect(() => {
         setSubmitDisabled(!validCheck(name, phoneNo, email, altphoneNo))
     }, [name, phoneNo, email, altphoneNo])
@@ -229,24 +240,7 @@ function ContactDisplayCard() {
                                 placeholder="Enter company" onChange={(e) => setCompany(e.target.value)}
                             />
                         </label>
-                        {/* <label className='textarea'>
-                            <Text as="div" size="3" mb="1" weight="bold">
-                                Group
-                            </Text>
-
-                            <Select.Root defaultValue="Group2" >
-                                <Select.Trigger size="3" />
-                                <Select.Content position='popper' style={{ scale: "1.4" }}>
-                                    <Select.Group>
-                                        <Select.Item value="Group1">Group1</Select.Item>
-                                        <Select.Item value="Group2">Group2</Select.Item>
-                                        <Select.Item value="Group3">Group3</Select.Item>
-                                    </Select.Group>
-                                </Select.Content>
-                            </Select.Root>
-
-                        </label> */}
-
+                    
                     </Flex>
                 </Flex>
                 <Button disabled={submitDisabled || isDisabled} onClick={() => contactUpdateHandle()} id='save-btn' size="3">Save</Button>

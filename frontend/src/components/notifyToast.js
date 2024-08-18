@@ -5,20 +5,27 @@ import { useSelector } from 'react-redux';
 import { Cross2Icon } from '@radix-ui/react-icons';
 import { IconButton } from '@radix-ui/themes';
 
+/**
+ * Renders a toast notification component that displays a title and an icon button to close it.
+ * The title and the open state of the toast are controlled by the Redux store.
+ *
+ * @return {JSX.Element} The toast notification component.
+ */
 function NotifyToast() {
 
     const [open, setOpen] = useState(false);
-    const [title, setTitle] = useState("")
-
+    const [title, setTitle] = useState("");
+    
     const userUpdate = useSelector((state) => state.user.isUpdated)
     const contactsUpdate = useSelector((state) => state.contacts.isUpdated)
 
-
+    // When the user update object changes, update the title and open the toast
     useEffect(() => {
         setTitle(userUpdate.title)
         setOpen(true)
     }, [userUpdate])
 
+    // When the contacts update object changes, update the title and open the toast
     useEffect(() => {
         setTitle(contactsUpdate.title)
         setOpen(true)

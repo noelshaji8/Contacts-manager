@@ -6,8 +6,6 @@ router.post("/create", contactController.createContact)
 
 router.post("/read", contactController.readContacts)
 
-router.post("/search/read", contactController.searchContact)
-
 router.patch("/update", contactController.updateContact)
 
 router.delete("/delete", contactController.deleteContact)

@@ -7,6 +7,14 @@ import { CheckIcon, Cross2Icon } from '@radix-ui/react-icons'
 import { Link } from 'react-router-dom';
 import { validatePassword, validateUsername } from '../utils/inputValidation';
 
+/**
+ * A React functional component that handles user sign up.
+ * 
+ * This component renders a sign up form with input fields for username and password.
+ * It uses the `signupUser` function to authenticate the user and displays a success or error message based on the result.
+ * 
+ * @return {JSX.Element} The JSX element representing the sign up form.
+ */
 function SignUpForm() {
 
     const [username, setUsername] = useState('');
@@ -17,34 +25,34 @@ function SignUpForm() {
     const errorMessage = useRef();
 
     useEffect(() => {
-        if (password === confirmPassword) {
-            setisConfirm(true)
-        }
-        else {
-            setisConfirm(false)
-        }
-
-
+        password === confirmPassword ? setisConfirm(true) : setisConfirm(false)
     }, [confirmPassword, password])
 
     const signUpHandle = async (e) => {
         e.preventDefault()
         try {
+
+            // Check if the passwords match and the input is in valid format
             if (isConfirm && validatePassword(password) && validateUsername(username)) {
                 await signupUser({ username: username, password: confirmPassword })
+
+                // If successful, display a green success message
                 errorMessage.current.style.margin = "2vh 0 -2vh 0";
                 errorMessage.current.innerText = "Sign Up successful"
                 errorMessage.current.style.color = "green";
             }
             else {
+              
                 if (!isConfirm) {
                     throw "The passwords do not match"
                 }
-                else{
+                else {
                     throw "Please enter according to valid formats"
                 }
             }
         } catch (error) {
+
+            // If there is an error, display a red error message
             errorMessage.current.style.margin = "2vh 0 -2vh 0";
             errorMessage.current.innerText = error
             errorMessage.current.style.color = "red";
@@ -64,7 +72,7 @@ function SignUpForm() {
                                 <Form.Message className="FormMessage" match="valueMissing">
                                     Please enter your username
                                 </Form.Message>
-                                <Form.Message className="FormMessage" match={()=>!validateUsername(username)}>
+                                <Form.Message className="FormMessage" match={() => !validateUsername(username)}>
                                     Must contain between 3-16 letters
                                 </Form.Message>
                             </div>
@@ -78,7 +86,7 @@ function SignUpForm() {
                                 <Form.Message className="FormMessage" match="valueMissing">
                                     Please enter your password
                                 </Form.Message>
-                                <Form.Message className="FormMessage" match={()=>!validatePassword(password)}>
+                                <Form.Message className="FormMessage" match={() => !validatePassword(password)}>
                                     Must be more than 4 characters long
                                 </Form.Message>
                             </div>

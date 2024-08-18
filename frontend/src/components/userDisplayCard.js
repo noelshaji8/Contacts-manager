@@ -17,6 +17,11 @@ import store from '../redux/store';
 import { useMediaQuery } from "react-responsive";
 
 
+/**
+ * A functional component that displays a user's profile information and allows them to update it.
+ * 
+ * @return {JSX.Element} The JSX element representing the user's profile information.
+ */
 function UserDisplayCard() {
 
     const isMobile = useMediaQuery({ maxWidth: 768 });
@@ -40,31 +45,29 @@ function UserDisplayCard() {
     const [isDisabled, setIsDisabled] = useState(true)
     const [submitDisabled, setSubmitDisabled] = useState(true)
 
+    // Opens a file picker to select a profile picture
     const { openFilePicker, filesContent, loading, errors } = useFilePicker({
         readAs: 'DataURL',
         accept: 'image/*',
         multiple: true,
-        validators: [
-            new FileAmountLimitValidator({ max: 1 }),
-            new FileTypeValidator(['jpg', 'jpeg', 'png']),
-            new FileSizeValidator({ maxFileSize: 5 * 1024 * 1024 }),
-            // new ImageDimensionsValidator({
-            //     maxHeight: 900, // in pixels
-            //     maxWidth: 1600,
-            //     minHeight: 600,
-            //     minWidth: 768,
-            // }),
+        validators: [            
+            new FileAmountLimitValidator({ max: 1 }), // Limit the number of files to 1            
+            new FileTypeValidator(['jpg', 'jpeg', 'png']), // Limit the file types to jpg, jpeg, and png
+            new FileSizeValidator({ maxFileSize: 5 * 1024 * 1024 }), // Limit the file size to 5MB
         ],
     });
 
-
     const userLogoutHandle = async () => {
+
+        // Resets the store to its initial state
         store.dispatch({ type: "RESET" })
         const response = await logoutUser()
         navigate("/")
     }
 
     const cancelUpdate = () => {
+
+        // Resets the fields to the user's information
         setName(user.username)
         setAddress(user.info.address)
         setPhoneNo(user.info.phone_no)
@@ -77,8 +80,10 @@ function UserDisplayCard() {
         setIsDisabled(true)
     }
 
+    // Updates the user's information
     const userUpdateHandle = async () => {
 
+        // Updates the user's information
         const response = await updateUserInfo({
             _id: user.info._id,
             username: name,
@@ -91,18 +96,18 @@ function UserDisplayCard() {
             dob: dob,
             pfp: pfp
         })
-        console.log(response);
-
-        setIsDisabled(true)
+        setIsDisabled(true) 
         dispatch(info(response))
 
     }
 
+    // Updates the profile picture when a new file is selected
     useEffect(() => {
         const image = filesContent.map((file, index) => file.content);
         image[0] && setPfp(image[0])
     }, [filesContent])
 
+    // Disables the submit button if the inputs are not valid
     useEffect(() => {
         setSubmitDisabled(!validCheck(name, phoneNo, email, altphoneNo))
     }, [name, phoneNo, email, altphoneNo])
