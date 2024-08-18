@@ -18,7 +18,7 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <PersistGate persistor={persistor}>
-      <Theme>
+      <Theme accentColor='green'>
         <App />
       </Theme>
       </PersistGate>     

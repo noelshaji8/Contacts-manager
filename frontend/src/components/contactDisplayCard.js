@@ -146,7 +146,7 @@ function ContactDisplayCard() {
 
                     <AlertDialog.Root>
                         <AlertDialog.Trigger>
-                            <Button size="3" color="indigo" style={{ cursor: "pointer" }}>Delete</Button>
+                            <Button size="3" style={{ cursor: "pointer" }}>Delete</Button>
                         </AlertDialog.Trigger>
                         <AlertDialog.Content maxWidth="450px">
                             <AlertDialog.Title>Delete contact</AlertDialog.Title>

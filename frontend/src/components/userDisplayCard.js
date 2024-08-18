@@ -139,7 +139,7 @@ function UserDisplayCard() {
 
                     <AlertDialog.Root>
                         <AlertDialog.Trigger>
-                            <Button size="3" color="indigo" style={{ cursor: "pointer" }}>Log out</Button>
+                            <Button size="3" style={{ cursor: "pointer" }}>Log out</Button>
                         </AlertDialog.Trigger>
                         <AlertDialog.Content maxWidth="450px">
                             <AlertDialog.Title>Log out</AlertDialog.Title>

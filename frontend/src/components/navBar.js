@@ -39,7 +39,7 @@ function NavBar() {
 
     return (
         <div className="navbar">
-            <div className='navbar-title'>Company</div>
+            <div className='navbar-title'>Innovature</div>
             <SearchBar />
 
             <RadioGroup.Root className="navbar-btns-grp" value={selected} onValueChange={setSelected}>
@@ -49,7 +49,7 @@ function NavBar() {
                             (<IconButton onClick={handleContactsDisplay} id='iconbtn' variant='ghost' color='teal' >
                                 <PersonIcon height="30" width="30" />
                             </IconButton>)
-                            : (<Button onClick={handleContactsDisplay} id='navbar-btns' size="3" radius='full' variant="ghost" color='gray'>Contacts</Button>)
+                            : (<Button onClick={handleContactsDisplay} id='navbar-btns' size="3" radius='full' variant="ghost" color='crimson'>Contacts</Button>)
                     }
                 </RadioGroup.Item>
 
@@ -58,7 +58,7 @@ function NavBar() {
                         <Card onClick={handleUserContact} size="1" variant='ghost'>
                             <Flex gap="3" align="center">
                                 {isMobile ? null :
-                                    (<Text as="div" size="3" weight="regular">
+                                    (<Text as="div" size="3" weight="bold">
                                         {user.username}
                                     </Text>)
                                 }

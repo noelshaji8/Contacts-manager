@@ -20,7 +20,7 @@
 
 .contact-card {
     cursor: pointer;
-    background: #efefef;
+    background: rgba(255, 99, 71, 0.2);
     border-radius: 15px;
     box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.15), -4px -4px 8px rgba(255, 255, 255, 0.7);
     padding: 1.5vh 1.5vw;
@@ -49,24 +49,7 @@
     justify-content: center;
     align-items: center;
     font-size: 14px;
-    color: #0073b1;
-
-}
-
-.group-info {
-    height: 100%;
-    width: 100%;
-    margin: 1vw;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    font-size: 14px;
-    color: #0073b1;
-}
-
-.group-info h4 {
-    margin: 0;
+    color: black;
 }
 
 /* NAVBAR */
@@ -75,9 +58,8 @@
     box-sizing: border-box;
     width: 100vw;
     height: 7vh;
-
     padding: 0 2vw;
-    background: #efefef;
+    background-color: rgba(255, 99, 71, 0.4);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -99,7 +81,7 @@
 
 .navbar-btns-grp #navbar-btns {
     color: black;
-    font-weight: 400;
+    font-weight: bold;
     transition: background-color 0.3s ease;
 }
 
@@ -108,11 +90,9 @@
 
 }
 
-/* .navbar-btns-grp #navbar-btns[data-state="checked"] {
-    background-color: lightgrey;
-    font-weight: 450;
-    transition: background-color 0.3s ease;
-} */
+.navbar-title{
+    font-weight: bold;
+}
 
 
 .navbar-profile {
@@ -140,13 +120,14 @@
 }
 
 .search-result:hover {
-    background-color: #efefef;
+    background-color: rgba(255, 99, 71, 0.6);
     cursor: pointer;
 }
 
 .results-list {
     width: 100%;
-    background-color: white;
+    background-color: rgb(248, 221, 215);;
+    border: 1px solid #ddd;
     display: flex;
     flex-direction: column;
     box-shadow: 0 4px 10px #ddd;
@@ -214,20 +195,20 @@
     padding: 10px 15px;
     border: 1px solid #ddd;
     border-radius: 5px;
-    color: #007bff;
+    color: rgb(94, 160, 94);
     text-decoration: none;
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .paginationBttns a:hover {
-    background-color: #007bff;
+    background-color: rgb(94, 160, 94);
     color: #fff;
 }
 
 .paginationActive a {
-    background-color: #007bff;
+    background-color: rgb(94, 160, 94);
     color: #fff;
-    border-color: #007bff;
+    border-color: rgb(94, 160, 94);
 }
 
 .paginationDisabled a {
