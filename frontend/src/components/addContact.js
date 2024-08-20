@@ -46,6 +46,18 @@ function AddContact() {
         ],
     });
 
+     // Function to clear input fields and reset file picker
+    const cancelAdd = () => {
+        setName("")
+        setAddress("")
+        setPhoneNo("")
+        setAltPhoneNo("")
+        setEmail("")
+        setCompany("")
+        setPfp()
+    }
+
+
 
     // Function to handle adding a new contact
     const contactAddHandle = async () => {
@@ -67,7 +79,7 @@ function AddContact() {
             
             // Dispatch update action with success message
             dispatch(update({ title: "Contact Added" }))
-
+            cancelAdd()
 
         } catch (error) {
             console.log(error);
@@ -75,18 +87,7 @@ function AddContact() {
 
     }
 
-    // Function to clear input fields and reset file picker
-    const cancelAdd = () => {
-        setName("")
-        setAddress("")
-        setPhoneNo("")
-        setAltPhoneNo("")
-        setEmail("")
-        setCompany("")
-        setPfp()
-    }
-
-    // Update pfp state when filesContent changes
+       // Update pfp state when filesContent changes
     useEffect(() => {
         const image = filesContent.map((file, index) => file.content);
         image[0] && setPfp(image[0])

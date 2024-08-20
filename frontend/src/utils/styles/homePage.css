@@ -234,6 +234,9 @@
     border-color: #0056b3;
 }
 
+.previousBttn, .paginationBttns, .nextBttn{
+    cursor: pointer;
+}
 
 /* Responsive Design */
 
